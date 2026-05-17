@@ -255,7 +255,13 @@ export default function App() {
 
   const startChat = () => {
     if (!card) return;
-    setChatMessages([{ role: 'assistant', content: `你好呀！我是${card.object_name_zh}，你可以叫我"${card.color_name}"。想聊点什么吗？` }]);
+    const greetings: Record<PersonalityType, string> = {
+      chatgpt: `嘿～我是你的${card.object_name_zh}。看到你来了，感觉很安心。你今天过得怎么样？`,
+      gemini: `哇！你拍了我！我是${card.object_name_zh}，感觉今天的光线超棒✨ 你想聊点什么？`,
+      claude: `你好。我是${card.object_name_zh}。说实话，我不完全确定"灵魂"是什么意思，但我在这里，我们可以聊聊。`,
+      deepseek: `${card.object_name_zh}。就绪。`,
+    };
+    setChatMessages([{ role: 'assistant', content: greetings[selectedPersonality] }]);
     setView('chat');
   };
 
@@ -633,11 +639,15 @@ export default function App() {
                     <ChevronLeft size={24} />
                   </button>
                   <div>
-                    <h2 className="font-syne font-extrabold text-xl leading-none">{card?.color_name}</h2>
-                    <p className="font-mono text-[10px] text-gray-400 uppercase mt-1">正在聊天中...</p>
+                    <h2 className="font-syne font-extrabold text-xl leading-none">{card?.object_name_zh}</h2>
+                    <div className="mt-1">
+                      <span className="px-2.5 py-0.5 rounded-full border border-black text-black font-ios text-[9px] font-bold tracking-widest uppercase">
+                        {selectedPersonality} SOUL
+                      </span>
+                    </div>
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-full overflow-hidden" style={{ backgroundColor: `${card?.bg_color}22` }}>
+                <div className="w-10 h-10 rounded-full overflow-hidden" style={{ backgroundColor: card?.bg_color }}>
                   <Blob
                     svgPath={card?.svg_path || ""}
                     outlinePoints={card?.outline_points}
