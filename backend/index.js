@@ -299,6 +299,7 @@ app.post('/api/generate-art', async (req, res) => {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: { parts },
+      config: { thinkingConfig: { thinkingBudget: 0 } },
     });
 
     let svgStr = (response.text || '').trim();
