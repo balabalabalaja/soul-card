@@ -248,13 +248,30 @@ ${PERSONALITY_PROMPTS[personality]}
 
 // POST /api/generate-art
 app.post('/api/generate-art', async (req, res) => {
-  const { object_name_zh, bg_color, image } = req.body;
+  const { object_name_zh, bg_color, image, base_shape } = req.body;
   if (!object_name_zh) return res.status(400).json({ error: 'Missing object_name_zh' });
 
   const ai = getAI();
   const primary = bg_color || '#888888';
 
+  const shapeGuide = {
+    glass:  '无把手玻璃杯：宽口、圆底、杯身略梯形，透明感',
+    mug:    '有把手马克杯：圆柱杯身 + 右侧明显把手',
+    bottle: '瓶子/台灯：有明显瓶颈，下宽上窄',
+    plant:  '植物盆栽：下方花盆 + 向上伸展的叶片',
+    book:   '书/笔记本：扁平长方形，左侧有书脊线',
+    phone:  '手机：竖长方形，圆角，比例约 1:2',
+    fruit:  '圆形水果或甜点：接近正圆或椭圆',
+    bowl:   '碗/浅口容器：宽扁半圆形，开口朝上',
+    circle: '圆形物品：接近正圆的罐、球或圆饼',
+    rect:   '方形盒子或砖块：接近正方形或横向长方形',
+    bag:    '手提包：梯形包体 + 顶部提手弧线',
+    blob:   '不规则形状：忠实还原图片中物品的实际轮廓',
+  }[base_shape] || '';
+
   const prompt = `你是一个专业的 SVG 插画设计师。根据图片中的物品"${object_name_zh}"，生成一个风格化的 SVG 插画。
+
+【形状约束 - 最高优先级】物品主体必须画成：${shapeGuide || object_name_zh + '的真实轮廓'}。形状必须和图片中的物品吻合，不能自由发挥成其他形状。
 
 风格要求（参考 Nana Banana 风格）：
 1. 极简几何平面设计，把物品简化为核心几何形状

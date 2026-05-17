@@ -179,7 +179,7 @@ export default function App() {
       // 等卡通生成完再展示；失败了展示预设形状，不会出现 broken image
       let artImage: string | null = null;
       try {
-        artImage = await generateArt(finalData.object_name_zh, finalData.bg_color, imageToAnalyze);
+        artImage = await generateArt(finalData.object_name_zh, finalData.bg_color, imageToAnalyze, finalData.base_shape);
       } catch (err) {
         console.warn('Art generation failed:', err);
       }
@@ -463,7 +463,7 @@ export default function App() {
                 )}
 
                 {(card || loading) && (
-                  <div className="relative flex flex-col items-center">
+                  <div className="relative flex flex-col items-center mt-20">
                     <AnimatePresence mode="wait">
                       {card && !loading && (
                         <motion.div

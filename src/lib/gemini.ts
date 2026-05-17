@@ -35,11 +35,11 @@ export async function analyzeObject(
   return res.json();
 }
 
-export async function generateArt(objectNameZh: string, bgColor: string, image: string): Promise<string> {
+export async function generateArt(objectNameZh: string, bgColor: string, image: string, baseShape?: string): Promise<string> {
   const res = await fetch(`${BACKEND_URL}/api/generate-art`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ object_name_zh: objectNameZh, bg_color: bgColor, image }),
+    body: JSON.stringify({ object_name_zh: objectNameZh, bg_color: bgColor, image, base_shape: baseShape }),
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
