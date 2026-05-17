@@ -417,7 +417,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className={`flex-1 flex flex-col items-center justify-center relative px-6 ${card || loading ? 'pb-[35vh]' : ''}`}>
+              <div className={`flex-1 flex flex-col items-center justify-center relative px-6 ${card || loading ? 'pb-[27vh]' : ''}`}>
                 {!card && !loading && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden">
                     <div className="absolute inset-[-10%] pointer-events-none scale-110">
@@ -507,23 +507,24 @@ export default function App() {
               <motion.div
                 initial={{ y: '100%' }}
                 animate={{ y: card && !loading ? 0 : '100%' }}
-                className="absolute bottom-0 left-0 right-0 h-[35vh] bg-[#f5f5f5]/80 backdrop-blur-2xl px-10 pt-8 pb-12 flex flex-col justify-between shadow-[0_-10px_40px_rgba(0,0,0,0.08)] rounded-t-[40px] z-40"
+                className="absolute bottom-0 left-0 right-0 h-[27vh] backdrop-blur-2xl px-10 pt-4 pb-6 flex flex-col justify-between shadow-[0_-10px_40px_rgba(0,0,0,0.08)] rounded-t-[40px] z-40"
+                style={{ backgroundColor: card ? `${card.bg_color}50` : 'rgba(245,245,245,0.8)' }}
               >
-                <div className="space-y-6">
+                <div className="space-y-3">
                   <div className="flex justify-center">
                     <div className="px-4 py-1.5 rounded-full bg-black text-white font-ios text-[10px] font-bold tracking-widest uppercase">
                       {selectedPersonality} SOUL
                     </div>
                   </div>
                   <div className="flex justify-between items-center gap-4">
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <h2 className="text-[11px] text-gray-400 uppercase tracking-[0.15em] truncate leading-none" style={{ fontFamily: "'Agency FB', 'Arial Narrow Bold', sans-serif", fontWeight: 700 }}>
+                    <div className="flex-1 min-w-0 space-y-0.5">
+                      <h2 className="text-[11px] text-gray-500 uppercase tracking-[0.15em] truncate leading-none" style={{ fontFamily: "'Agency FB', 'Arial Narrow Bold', sans-serif", fontWeight: 700 }}>
                         {card?.hex_display}
                       </h2>
-                      <p className="font-syne font-extrabold text-lg text-gray-900 uppercase tracking-[0.1em] leading-tight break-words">
+                      <p className="font-syne font-extrabold text-sm text-gray-900 uppercase tracking-[0.1em] leading-tight break-words">
                         {card?.color_name}
                       </p>
-                      <p className="text-[11px] text-gray-500 pt-1 tracking-[0.15em] truncate leading-none" style={{ fontFamily: "'Agency FB', 'Arial Narrow Bold', sans-serif", fontWeight: 700 }}>
+                      <p className="text-[11px] text-gray-600 tracking-[0.15em] truncate leading-none" style={{ fontFamily: "'Agency FB', 'Arial Narrow Bold', sans-serif", fontWeight: 700 }}>
                         {card?.object_name_zh}
                       </p>
                     </div>
@@ -541,7 +542,7 @@ export default function App() {
                   <div />
                   <button
                     onPointerDown={(e) => { e.preventDefault(); nextWhisper(); }}
-                    className="font-mono text-[8px] text-gray-300 uppercase tracking-widest hover:text-gray-500 transition-colors"
+                    className="font-mono text-[8px] text-gray-400 uppercase tracking-widest hover:text-gray-600 transition-colors"
                   >
                     TAP TO WHISPER
                   </button>
