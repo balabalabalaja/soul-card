@@ -542,7 +542,7 @@ export default function App() {
                   <div />
                   <button
                     onPointerDown={(e) => { e.preventDefault(); nextWhisper(); }}
-                    className="font-mono text-[8px] text-gray-400 uppercase tracking-widest hover:text-gray-600 transition-colors"
+                    className="bg-black text-white px-6 py-2 rounded-full font-mono text-[8px] uppercase tracking-widest active:scale-95 transition-all"
                   >
                     TAP TO WHISPER
                   </button>
