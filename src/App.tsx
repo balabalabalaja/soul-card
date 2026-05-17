@@ -92,6 +92,7 @@ export default function App() {
   const [lastImage, setLastImage] = useState<string | null>(null);
   const [extractedHex, setExtractedHex] = useState<string>('#000000');
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [showSaveToast, setShowSaveToast] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
   
@@ -239,6 +240,8 @@ export default function App() {
     const newSaved = [card, ...savedCards];
     setSavedCards(newSaved);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(newSaved));
+    setShowSaveToast(true);
+    setTimeout(() => setShowSaveToast(false), 2000);
   };
 
   const deleteCard = (index: number, e: React.MouseEvent) => {
@@ -361,7 +364,10 @@ export default function App() {
               exit={{ opacity: 0, y: -20 }}
               className="absolute inset-0 z-[400] bg-white flex flex-col items-center justify-center p-8"
             >
-              <h2 className="text-2xl font-bold mb-8 tracking-tighter">SELECT SOUL TYPE</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tighter">SELECT SOUL TYPE</h2>
+              <div className="px-4 py-1.5 rounded-full border border-black text-black font-ios text-[10px] font-bold tracking-widest mb-6">
+                为你的物品注入灵魂
+              </div>
               <div className="grid grid-cols-1 gap-4 w-full max-w-xs">
                 {PERSONALITIES.map((p) => (
                   <button
@@ -458,12 +464,17 @@ export default function App() {
                       <h1 className="font-cartoon font-bold text-6xl text-black tracking-tight leading-[0.85] drop-shadow-md">
                         LET'S<br />CHECK IN!
                       </h1>
-                      <button
-                        onPointerDown={(e) => { e.preventDefault(); setShowCamera(true); }}
-                        className="w-24 h-24 bg-white rounded-full flex items-center justify-center active:scale-90 active:bg-gray-100 transition-all border-4 border-black mx-auto shadow-2xl z-20 group"
-                      >
-                        <CameraIcon className="w-10 h-10 text-black group-hover:scale-110 transition-transform" />
-                      </button>
+                      <div className="flex flex-col items-center gap-3">
+                        <button
+                          onPointerDown={(e) => { e.preventDefault(); setShowCamera(true); }}
+                          className="w-24 h-24 bg-white rounded-full flex items-center justify-center active:scale-90 active:bg-gray-100 transition-all border-4 border-black mx-auto shadow-2xl z-20 group"
+                        >
+                          <CameraIcon className="w-10 h-10 text-black group-hover:scale-110 transition-transform" />
+                        </button>
+                        <div className="px-4 py-1.5 rounded-full border border-black text-black font-ios text-[10px] font-bold tracking-widest">
+                          拍一个身边的物品
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -523,16 +534,15 @@ export default function App() {
                     </div>
                   </div>
                   <div className="flex justify-between items-center gap-4">
-                    <div className="flex-1 min-w-0 space-y-0.5">
-                      <h2 className="text-[11px] text-gray-500 uppercase tracking-[0.15em] truncate leading-none" style={{ fontFamily: "'Agency FB', 'Arial Narrow Bold', sans-serif", fontWeight: 700 }}>
-                        {card?.hex_display}
-                      </h2>
-                      <p className="font-syne font-extrabold text-sm text-gray-900 uppercase tracking-[0.1em] leading-tight break-words">
-                        {card?.color_name}
-                      </p>
-                      <p className="text-[11px] text-gray-600 tracking-[0.15em] truncate leading-none" style={{ fontFamily: "'Agency FB', 'Arial Narrow Bold', sans-serif", fontWeight: 700 }}>
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <p className="font-syne font-extrabold text-base text-gray-900 leading-tight">
                         {card?.object_name_zh}
                       </p>
+                      {card?.hook && (
+                        <p className="font-ios text-[11px] text-gray-500 leading-snug">
+                          {card.hook}
+                        </p>
+                      )}
                     </div>
                     <div className="flex-shrink-0">
                       <button
@@ -681,6 +691,23 @@ export default function App() {
                     </div>
                   </motion.div>
                 ))}
+                {chatMessages.length === 1 && card?.chat_topics && card.chat_topics.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex flex-wrap gap-2 pl-1"
+                  >
+                    {card.chat_topics.map((topic, i) => (
+                      <button
+                        key={i}
+                        onClick={() => sendMessage(topic)}
+                        className="px-4 py-2 rounded-full border border-gray-300 bg-white font-ios text-sm text-gray-600 active:scale-95 transition-all shadow-sm"
+                      >
+                        {topic}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
                 {isTyping && (
                   <div className="flex justify-start">
                     <div className="bg-white/50 backdrop-blur-xl px-6 py-3 rounded-[1.5rem] border border-white/20 shadow-sm flex gap-1">
@@ -716,6 +743,19 @@ export default function App() {
                   </button>
                 </form>
               </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {showSaveToast && (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              className="absolute bottom-36 left-1/2 -translate-x-1/2 bg-black text-white px-6 py-2 rounded-full font-ios text-sm z-[300] whitespace-nowrap pointer-events-none"
+            >
+              已收藏 ✓
             </motion.div>
           )}
         </AnimatePresence>

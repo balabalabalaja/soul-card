@@ -12,6 +12,8 @@ export interface SoulCardData {
   object_name_zh: string;
   mood: "happy" | "tired" | "grumpy" | "surprised" | "calm" | "excited";
   whispers: string[];
+  hook?: string;
+  chat_topics?: string[];
   generated_image?: string | null;
 }
 
