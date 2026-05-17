@@ -606,9 +606,9 @@ export default function App() {
                         />
                       </div>
                       <div className="p-4 bg-[#f5f0e4] border-t border-gray-100">
-                        <h3 className="font-syne font-extrabold text-lg text-gray-900 leading-none mb-1">{c.hex_display}</h3>
-                        <p className="font-mono text-[10px] text-gray-800 font-medium truncate mb-2">{c.color_name}</p>
-                        <p className="font-mono text-[8px] text-gray-400 uppercase tracking-widest">PANTONE®</p>
+                        <h3 className="font-syne font-extrabold text-lg text-gray-900 leading-none mb-1">{c.object_name_zh}</h3>
+                        <p className="font-mono text-[10px] text-gray-500 font-medium truncate mb-2">{c.color_name}</p>
+                        <p className="font-mono text-[8px] text-gray-400 uppercase tracking-widest">{c.hex_display}</p>
                       </div>
                     </motion.div>
                   ))}
