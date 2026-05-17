@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>Soul Card Gallery</title>
+<style>
+  body { background: #1a1a1a; color: #fff; font-family: sans-serif; padding: 20px; }
+  h1 { text-align: center; margin-bottom: 30px; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .card { background: #2a2a2a; border-radius: 12px; padding: 12px; text-align: center; }
+  .card img { width: 100%; border-radius: 8px; aspect-ratio: 1; object-fit: contain; background: #333; }
+  .card .orig { width: 48%; display: inline-block; }
+  .card .art { width: 48%; display: inline-block; }
+  .label { font-size: 12px; color: #aaa; margin: 4px 0; }
+  .name { font-size: 14px; font-weight: bold; margin: 6px 0 2px; }
+  .shape { font-size: 11px; color: #888; }
+  .no-art { width: 100%; aspect-ratio: 1; background: #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #555; font-size: 12px; }
+</style>
+</head>
+<body>
+<h1>Soul Card Gallery — 形状识别 V2 测试</h1>
+<div class="grid">
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/1.jpg" alt="1.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIDEuIENvbnRyYXN0aW5nIEJhY2tncm91bmQ6IEEgdmlicmFudCBjb3JhbCBwaW5rICgjRkY2QjZCKSBwcm92aWRlcyBoaWdoIGNvbnRyYXN0IHdpdGggdGhlIGRhcmsgYmFnLiAtLT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0ZGNkI2QiIvPgoKICA8IS0tIDIuIE1haW4gQmFnIEJvZHk6IFNpbXBsaWZpZWQgaW50byBhIHRyYXBlem9pZGFsIHNoYXBlLCB1c2luZyB0aGUgcHJpbWFyeSBjb2xvciAjMkMyQzJDLiAtLT4KICA8cGF0aCBkPSJNIDE1IDE3MCBMIDE4NSAxNzAgTCAxNzUgNzAgTCAyNSA3MCBaIiBmaWxsPSIjMkMyQzJDIi8+CgogIDwhLS0gMy4gQmFnIFRvcCBGbGFwL1JpbTogVGhpcyBzZWN0aW9uIGRlZmluZXMgdGhlIHVwcGVyIHBhcnQgb2YgdGhlIGJhZyBhbmQgZnJhbWVzIHRoZSBhcmVhIGZvciB0aGUgJ2V5ZXMnLiAtLT4KICA8IS0tIEl0IGhhcyBhIHNsaWdodCBpbndhcmQgY3VydmUgYXQgdGhlIHRvcCB0byBuYXR1cmFsbHkgYWNjb21tb2RhdGUgdGhlIGV5ZSBwYW5lbC4gLS0+CiAgPHBhdGggZD0iTSAyNSA3MCBMIDE3NSA3MCBMIDE3MCA1NSBDIDE3MCA0MCAxMzAgMzAgMTAwIDM1IEMgNzAgMzAgMzAgNDAgMzAgNTUgWiIgZmlsbD0iIzJDMkMyQyIvPgoKICA8IS0tIDYuIFJlc2VydmVkIFNwYWNlIGZvciBFeWVzOiBBIGRpc3RpbmN0IGdlb21ldHJpYyBwYW5lbCBpbiBsaWdodCBncmV5ICgjRjBGMEYwKSB0byBtYXJrIHRoZSBleWUgYXJlYS4gLS0+CiAgPCEtLSBUaGlzIHBvbHlnb24gaXMgcGxhY2VkIHdpdGhpbiB0aGUgc3BlY2lmaWVkIHk9MzAtNTUgcmVnaW9uIChzcGVjaWZpY2FsbHkgeT0zNS01MCkgYW5kIGhhcyBhIHdpZHRoIG9mIDUwLCBjZW50ZXJlZC4gLS0+CiAgPHBvbHlnb24gcG9pbnRzPSI3NSw1MCAxMjUsNTAgMTAwLDM1IiBmaWxsPSIjRjBGMEYwIi8+CgogIDwhLS0gNC4gSGFuZGxlczogQm9sZCwgZ2VvbWV0cmljIHNoYXBlcyBmb3IgdGhlIGhhbmRsZXMsIHVzaW5nIHRoZSBtYWluIGJhZyBjb2xvciAjMkMyQzJDLiAtLT4KICA8IS0tIFRoZXkgYXJlIGRlc2lnbmVkIHRvIGFyY2ggYWJvdmUgdGhlIGV5ZSBwYW5lbCB3aXRob3V0IGNvdmVyaW5nIGl0LiAtLT4KICA8IS0tIExlZnQgSGFuZGxlIFNlZ21lbnQgLS0+CiAgPHBhdGggZD0iTSA0MCA1NSBDIDQwIDM1IDYwIDI1IDcwIDQwIEwgNzUgNDUgTCA3MCA1MCBDIDYwIDM1IDQwIDQ1IDQwIDU1IFoiIGZpbGw9IiMyQzJDMkMiLz4KICA8IS0tIFJpZ2h0IEhhbmRsZSBTZWdtZW50IC0tPgogIDxwYXRoIGQ9Ik0gMTYwIDU1IEMgMTYwIDM1IDE0MCAyNSAxMzAgNDAgTCAxMjUgNDUgTCAxMzAgNTAgQyAxNDAgMzUgMTYwIDQ1IDE2MCA1NSBaIiBmaWxsPSIjMkMyQzJDIi8+CiAgPCEtLSBUb3AgSGFuZGxlIEFyY2ggKGNvbm5lY3RpbmcgdGhlIHR3byBzZWdtZW50cykgLS0+CiAgPHBhdGggZD0iTSA3MCA0MCBRIDEwMCAyMCAxMzAgNDAgTCAxMjUgNDUgUSAxMDAgMjUgNzUgNDUgWiIgZmlsbD0iIzJDMkMyQyIvPgoKICA8IS0tIEZyb250IFppcHBlci9Qb2NrZXQ6IEEgZGlzdGluY3QgcmVjdGFuZ3VsYXIgcGFuZWwgaW4gYSBzbGlnaHRseSBkaWZmZXJlbnQgZGFyayBncmV5ICgjM0EzQTNBKSBmb3IgY29udHJhc3QuIC0tPgogIDxyZWN0IHg9IjM1IiB5PSI5NSIgd2lkdGg9IjEzMCIgaGVpZ2h0PSI0MCIgZmlsbD0iIzNBM0EzQSIvPgoKICA8IS0tIFppcHBlciBMaW5lICYgUHVsbDogUmVwcmVzZW50ZWQgYnkgdGhpbiByZWN0YW5nbGVzIGluIGEgbGlnaHRlciBncmV5ICgjQzBDMEMwKS4gLS0+CiAgPHJlY3QgeD0iNDAiIHk9Ijk1IiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjMiIGZpbGw9IiNDMEMwQzAiLz4KICA8cmVjdCB4PSIxMDAiIHk9Ijk4IiB3aWR0aD0iNSIgaGVpZ2h0PSIxMCIgZmlsbD0iI0MwQzBDMCIvPgoKICA8IS0tIFN0dWRzL0hhcmR3YXJlOiBTbWFsbCBjaXJjbGVzIGluIGxpZ2h0ZXIgZ3JleSAoI0MwQzBDMCkgdG8gcmVwcmVzZW50IGRlY29yYXRpdmUgc3R1ZHMuIC0tPgogIDxjaXJjbGUgY3g9IjM1IiBjeT0iNjUiIHI9IjMiIGZpbGw9IiNDMEMwQzAiLz4KICA8Y2lyY2xlIGN4PSIxNjUiIGN5PSI2NSIgcj0iMyIgZmlsbD0iI0MwQzBDMCIvPgogIDxjaXJjbGUgY3g9IjQ1IiBjeT0iMTMwIiByPSIzIiBmaWxsPSIjQzBDMEMwIi8+CiAgPGNpcmNsZSBjeD0iMTU1IiBjeT0iMTMwIiByPSIzIiBmaWxsPSIjQzBDMEMwIi8+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iMTMwIiByPSIzIiBmaWxsPSIjQzBDMEMwIi8+CgogIDwhLS0gR2VvbWV0cmljIERvdCBUZXh0dXJlOiBBIHBhdHRlcm5lZCBncm91cCBvZiBzbWFsbCBjaXJjbGVzIGluIGEgZGFyayBncmV5ICgjM0EzQTNBKSBvbiB0aGUgYmFnJ3Mgc3VyZmFjZS4gLS0+CiAgPGcgZmlsbD0iIzNBM0EzQSI+CiAgICA8Y2lyY2xlIGN4PSI0MCIgY3k9IjgwIiByPSIxLjUiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjgwIiByPSIxLjUiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjgwIiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9IjcwIiBjeT0iODAiIHI9IjEuNSIvPjxjaXJjbGUgY3g9IjgwIiBjeT0iODAiIHI9IjEuNSIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iODAiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iODAiIHI9IjEuNSIvPjxjaXJjbGUgY3g9IjExMCIgY3k9IjgwIiByPSIxLjUiLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSI4MCIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSIxMzAiIGN5PSI4MCIgcj0iMS41Ii8+PGNpcmNsZSBjeD0iMTQwIiBjeT0iODAiIHI9IjEuNSIvPjxjaXJjbGUgY3g9IjE1MCIgY3k9IjgwIiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9IjE2MCIgY3k9IjgwIiByPSIxLjUiLz4KCiAgICA8Y2lyY2xlIGN4PSI0NSIgY3k9Ijg1IiByPSIxLjUiLz48Y2lyY2xlIGN4PSI1NSIgY3k9Ijg1IiByPSIxLjUiLz48Y2lyY2xlIGN4PSI2NSIgY3k9Ijg1IiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9Ijc1IiBjeT0iODUiIHI9IjEuNSIvPjxjaXJjbGUgY3g9Ijg1IiBjeT0iODUiIHI9IjEuNSIvPjxjaXJjbGUgY3g9Ijk1IiBjeT0iODUiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iMTA1IiBjeT0iODUiIHI9IjEuNSIvPjxjaXJjbGUgY3g9IjExNSIgY3k9Ijg1IiByPSIxLjUiLz48Y2lyY2xlIGN4PSIxMjUiIGN5PSI4NSIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSIxMzUiIGN5PSI4NSIgcj0iMS41Ii8+PGNpcmNsZSBjeD0iMTQ1IiBjeT0iODUiIHI9IjEuNSIvPjxjaXJjbGUgY3g9IjE1NSIgY3k9Ijg1IiByPSIxLjUiLz4KICA8L2c+CgogIDwhLS0gU2lkZSB0aWVzL3N0cmFwczogU2ltcGxpZmllZCBhcyBjbGVhbiwgc3Ryb2tlLW9ubHkgcGF0aHMgaW4gdGhlIG1haW4gYmFnIGNvbG9yLiAtLT4KICA8cGF0aCBkPSJNIDIwIDE1MCBMIDEwIDE2MCBNIDE4MCAxNTAgTCAxOTAgMTYwIiBzdHJva2U9IiMyQzJDMkMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CgogIDwhLS0gU21hbGwgZGV0YWlscyBvbiB0aGUgc2lkZXMgb2YgdGhlIGJhZzogVmVydGljYWwgc3RyaXBlcyBmb3IgYWRkZWQgZ2VvbWV0cmljIGludGVyZXN0LiAtLT4KICA8cmVjdCB4PSIxNzUiIHk9IjExMCIgd2lkdGg9IjUiIGhlaWdodD0iMjAiIGZpbGw9IiMzQTNBM0EiLz4KICA8cmVjdCB4PSIyMCIgeT0iMTEwIiB3aWR0aD0iNSIgaGVpZ2h0PSIyMCIgZmlsbD0iIzNBM0EzQSIvPgo8L3N2Zz4=" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 30)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 60)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">手提包</div>
+    <div class="shape">形状: bag | 颜色: #2C2C2C</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/2.jpg" alt="2.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIEJhY2tncm91bmQ6IEhpZ2gtc2F0dXJhdGlvbiBjb250cmFzdGluZyBjb2xvciAodmlicmFudCBwaW5rKSAtLT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0ZGNjlCNCIvPgoKICA8IS0tIFRpc3N1ZSBCb3ggU3RydWN0dXJlIChNaW5pbWFsIEdlb21ldHJpYyBGbGF0IERlc2lnbikgLS0+CiAgPCEtLSBNYWluIEdyZWVuIGZvciBmcm9udCBmYWNlIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iNDUsODAgMTU1LDgwIDE2MCwyMCA1MCwyMCIgZmlsbD0iIzcwQkY0QSIvPgogIDwhLS0gRGFya2VyIEdyZWVuIGZvciB0b3AgZmFjZSB3aXRoIGRvdCB0ZXh0dXJlIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iNTAsMjAgMTYwLDIwIDE3MCw1IDYwLDUiIGZpbGw9IiM1RDlGM0QiLz4KICA8IS0tIExpZ2h0ZXIgR3JlZW4gZm9yIHJpZ2h0IHNpZGUgZmFjZSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjE1NSw4MCAxNjAsMjAgMTcwLDUgMTc1LDY1IiBmaWxsPSIjOEVDQjcyIi8+CgogIDwhLS0gRGVjb3JhdGl2ZSBFbGVtZW50cyBvbiB0aGUgRnJvbnQgRmFjZSAoaW5zcGlyZWQgYnkgb3JpZ2luYWwsIHNpbXBsaWZpZWQgYW5kIGJvbGQpIC0tPgogIDwhLS0gT3JhbmdlIENpcmNsZXMgKCNGRjhDMDApIC0tPgogIDxjaXJjbGUgY3g9IjcwIiBjeT0iNzAiIHI9IjE1IiBmaWxsPSIjRkY4QzAwIi8+CiAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iNzAiIHI9IjIwIiBmaWxsPSIjRkY4QzAwIi8+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iMjUiIHI9IjEwIiBmaWxsPSIjRkY4QzAwIi8+CgogIDwhLS0gUGluayBGbG93ZXJzL1BldGFscyAoI0ZGQjZDMSkgLSBwb3NpdGlvbmVkIHRvIGF2b2lkIGV5ZSBzcGFjZSAoeD03NS0xMjUsIHk9MzUtNjUpIC0tPgogIDxwYXRoIGQ9Ik02MCA2NSBRNzAgNTUgODAgNjUgUTcwIDc1IDYwIDY1IFoiIGZpbGw9IiNGRkI2QzEiLz4KICA8cGF0aCBkPSJNMTIwIDY1IFExMzAgNTUgMTQwIDY1IFExMzAgNzUgMTIwIDY1IFoiIGZpbGw9IiNGRkI2QzEiLz4KICA8cGF0aCBkPSJNMTQ1IDI1IFExNTUgMTUgMTY1IDI1IFExNTUgMzUgMTQ1IDI1IFoiIGZpbGw9IiNGRkI2QzEiLz4KCiAgPCEtLSBEYXJrIEdyZWVuIExlYXZlcyAoIzVEOUYzRCkgLSBwb3NpdGlvbmVkIHRvIGF2b2lkIGV5ZSBzcGFjZSAtLT4KICA8cGF0aCBkPSJNNDUgNzUgQzYwIDY1IDYwIDQ1IDUwIDQwIEM0MCA0NSA0MCA2NSA0NSA3NSBaIiBmaWxsPSIjNUQ5RjNEIi8+CiAgPHBhdGggZD0iTTE1MCA3NSBDMTM1IDY1IDEzNSA0NSAxNDUgNDAgQzE1NSA0NSAxNTUgNjUgMTUwIDc1IFoiIGZpbGw9IiM1RDlGM0QiLz4KICA8cGF0aCBkPSJNODAgNzggQzkwIDcwIDkwIDY1IDg1IDYwIEM4MCA2NSA4MCA3MCA4MCA3OCBaIiBmaWxsPSIjNUQ5RjNEIi8+CiAgPHBhdGggZD0iTTEyMCA3OCBDMTEwIDcwIDExMCA2NSAxMTUgNjAgQzEyMCA2NSAxMjAgNzAgMTIwIDc4IFoiIGZpbGw9IiM1RDlGM0QiLz4KICAKICA8IS0tIEdlb21ldHJpYyBEb3QgVGV4dHVyZSBvbiB0aGUgVG9wIEZhY2UgKHdoaXRlIGRvdHMpIC0tPgogIDxnIGZpbGw9IiNGRkZGRkYiPgogICAgPCEtLSBSb3cgMSAtLT4KICAgIDxjaXJjbGUgY3g9IjY1IiBjeT0iOCIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSI4NSIgY3k9IjgiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iMTA1IiBjeT0iOCIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSIxMjUiIGN5PSI4IiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9IjE0NSIgY3k9IjgiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iMTY1IiBjeT0iOCIgcj0iMS41Ii8+CgogICAgPCEtLSBSb3cgMiAtLT4KICAgIDxjaXJjbGUgY3g9IjY4IiBjeT0iMTIiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iODgiIGN5PSIxMiIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSIxMDgiIGN5PSIxMiIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMiIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSIxNDgiIGN5PSIxMiIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSIxNjgiIGN5PSIxMiIgcj0iMS41Ii8+CgogICAgPCEtLSBSb3cgMyAtLT4KICAgIDxjaXJjbGUgY3g9IjcxIiBjeT0iMTYiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iOTEiIGN5PSIxNiIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSIxMTEiIGN5PSIxNiIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSIxMzEiIGN5PSIxNiIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSIxNTEiIGN5PSIxNiIgcj0iMS41Ii8+CiAgPC9nPgoKICA8IS0tIFRpc3N1ZSBPcGVuaW5nIGFuZCBUaXNzdWUgKFdoaXRlKSAtLT4KICA8ZWxsaXBzZSBjeD0iMTEwIiBjeT0iMTIuNSIgcng9IjMwIiByeT0iMTAiIGZpbGw9IiNGRkZGRkYiLz4KICA8cG9seWdvbiBwb2ludHM9IjEwMCwxNSAxMjAsMTUgMTE1LDUgMTA1LDUiIGZpbGw9IiNGRkZGRkYiLz4KCjwvc3ZnPg==" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 30)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 70)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">抽纸盒</div>
+    <div class="shape">形状: rect | 颜色: #70BF4A</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/3.jpg" alt="3.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIOiDjOaZr+iJsiAtIOaSnuiJsuiDjOaZr++8jOmrmOmlseWSjOiTneiJsiAtLT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzg3Q0VFQiIvPgoKICA8IS0tIOiKneWjq+ibi+ezleeahOeDmOeEmee6uCAtIOaegeeugOWHoOS9leW5s+mdouiuvuiuoe+8jOS9v+eUqHBhdGjmqKHmi5/mipjlj6DmlYjmnpwgLS0+CiAgPGc+CiAgICA8IS0tIOS4u+imgee6uOW8oOW9oueKtu+8jOS9v+eUqOi0neWhnuWwlOabsue6v+aooeaLn+iHqueEtuiktueasSAtLT4KICAgIDxwYXRoIGQ9Ik0xMCA4MCBDMCAzMCA1MCA1IDEwMCAxMCBDMTUwIDUgMjAwIDMwIDE5MCA4MCBDMTk1IDE1MCAxNTAgMTk1IDEwMCAxOTAgQzUwIDE5NSA1IDE1MCAxMCA4MCBaIiBmaWxsPSIjRjVERUIzIi8+CgogICAgPCEtLSDlhoXpg6jopLbnmrHnu4boioLvvIzkvb/nlKjnlaXmt7HnmoTpopzoibLlop7liqDlsYLmrKHmhJ8gLS0+CiAgICA8cGF0aCBkPSJNMjAgNzUgQzE1IDQ1IDYwIDE1IDEwMCAyMCBDMTQwIDE1IDE4NSA0NSAxODAgNzUgQzE4NSAxNDAgMTQwIDE4NSAxMDAgMTgwIEM2MCAxODUgMTUgMTQwIDIwIDc1IFoiIGZpbGw9IiNERUI4ODciLz4KCiAgICA8IS0tIOWHoOS9leeCueeKtue6ueeQhuijhemlsOe6uOW8oOihqOmdou+8jOS9v+eUqOS4u+iJsiAjNEExQTVE77yM5L2O6YCP5piO5bqmIC0tPgogICAgPGcgZmlsbD0iIzRBMUE1RCIgb3BhY2l0eT0iMC4xNSI+CiAgICAgIDxjaXJjbGUgY3g9IjI1IiBjeT0iMTEwIiByPSIxLjUiLz4KICAgICAgPGNpcmNsZSBjeD0iNDUiIGN5PSIxMzAiIHI9IjEuNSIvPgogICAgICA8Y2lyY2xlIGN4PSIxNjAiIGN5PSIxMjAiIHI9IjEuNSIvPgogICAgICA8Y2lyY2xlIGN4PSIxNzAiIGN5PSI5MCIgcj0iMS41Ii8+CiAgICAgIDxjaXJjbGUgY3g9IjgwIiBjeT0iMjUiIHI9IjEuNSIvPgogICAgICA8Y2lyY2xlIGN4PSIxMjAiIGN5PSIyOCIgcj0iMS41Ii8+CiAgICAgIDxjaXJjbGUgY3g9IjE1IiBjeT0iNjAiIHI9IjEuNSIvPgogICAgICA8Y2lyY2xlIGN4PSIxODUiIGN5PSI2MCIgcj0iMS41Ii8+CiAgICAgIDxjaXJjbGUgY3g9IjEwMCIgY3k9IjE3MCIgcj0iMS41Ii8+CiAgICAgIDxjaXJjbGUgY3g9IjM1IiBjeT0iODAiIHI9IjEuNSIvPgogICAgICA8Y2lyY2xlIGN4PSIxNjUiIGN5PSIxNDAiIHI9IjEuNSIvPgogICAgICA8Y2lyY2xlIGN4PSIxMzAiIGN5PSIxNzAiIHI9IjEuNSIvPgogICAgICA8Y2lyY2xlIGN4PSI3MCIgY3k9IjE2NSIgcj0iMS41Ii8+CiAgICA8L2c+CiAgPC9nPgoKICA8IS0tIOiKneWjq+ibi+ezleS4u+S9kyAtIOWkp+iDhuiJsuWdl+WIhuWJsiAtLT4KICA8Zz4KICAgIDwhLS0g5aSW5bGC5Y6a6L655qGGL+mYtOW9se+8jOS9v+eUqOS4u+iJsiAjNEExQTVEIOWIm+mAoOmrmOWvueavlOW6piAtLT4KICAgIDxlbGxpcHNlIGN4PSIxMDAiIGN5PSIxMDUiIHJ4PSI3MCIgcnk9IjYwIiBmaWxsPSIjNEExQTVEIi8+CgogICAgPCEtLSDom4vns5Xng6TliLbpg6jliIbvvIzkvb/nlKjkupLooaXoibIgI0ZGRDcwMCAo6YeR6ImyKSAtLT4KICAgIDxlbGxpcHNlIGN4PSIxMDAiIGN5PSIxMDUiIHJ4PSI2NyIgcnk9IjU3IiBmaWxsPSIjRkZENzAwIi8+CgogICAgPCEtLSDpobbpg6jlpbbmsrnlsYLvvIzmtYXoibLvvIzkuLrnnLznnZvnlZnlh7rnqbrpl7QgLS0+CiAgICA8IS0tIOS4reW/g+WBj+S4iuWMuuWfn++8iHk9MzAtNTUg6ZmE6L+R77yJ55WZ5Ye657qmIDUweDMwIOeahOepuumXtOe7meecvOedm+OAgiAtLT4KICAgIDwhLS0g5q2k5qSt5ZyG55qE6IyD5Zu05Li6IHg9NDDliLAxNjDvvIx5PTMw5YiwMTMw77yM5a6M576O6KaG55uWIHk9MzAtNTUg5Yy65Z+f44CCIC0tPgogICAgPGVsbGlwc2UgY3g9IjEwMCIgY3k9IjgwIiByeD0iNjAiIHJ5PSI1MCIgZmlsbD0iI0ZGRkFDRCIvPgoKICAgIDwhLS0g5Yeg5L2V57q/5p2h57q555CG6KOF6aWw6JuL57OV54Ok5Yi26YOo5YiG77yM5L2/55So5Li76ImyICM0QTFBNUTvvIzkvY7pgI/mmI7luqYgLS0+CiAgICA8ZyBzdHJva2U9IiM0QTFBNUQiIHN0cm9rZS13aWR0aD0iMC43IiBvcGFjaXR5PSIwLjIiPgogICAgICA8IS0tIOaUvuWwhOeKtue6v+adoe+8jOaooeaLn+WchuW9ouibi+ezleeahOWIh+WJsue6v+aIlue6ueeQhiAtLT4KICAgICAgPGxpbmUgeDE9IjEwMCIgeTE9IjEwNSIgeDI9IjE2MCIgeTI9IjEwNSIvPgogICAgICA8bGluZSB4MT0iMTAwIiB5MT0iMTA1IiB4Mj0iMTQ1IiB5Mj0iNzAiLz4KICAgICAgPGxpbmUgeDE9IjEwMCIgeTE9IjEwNSIgeDI9IjEwMCIgeTI9IjQ4Ii8+CiAgICAgIDxsaW5lIHgxPSIxMDAiIHkxPSIxMDUiIHgyPSI1NSIgeTI9IjcwIi8+CiAgICAgIDxsaW5lIHgxPSIxMDAiIHkxPSIxMDUiIHgyPSI0MCIgeTI9IjEwNSIvPgogICAgICA8bGluZSB4MT0iMTAwIiB5MT0iMTA1IiB4Mj0iNTUiIHkyPSIxNDAiLz4KICAgICAgPGxpbmUgeDE9IjEwMCIgeTE9IjEwNSIgeDI9IjEwMCIgeTI9IjE2MiIvPgogICAgICA8bGluZSB4MT0iMTAwIiB5MT0iMTA1IiB4Mj0iMTQ1IiB5Mj0iMTQwIi8+CiAgICA8L2c+CgogICAgPCEtLSDmtYbmnpzoo4XppbAgLSDmnoHnroDlh6DkvZXvvIzpgb/lvIDnnLznnZvljLrln58gKHg9NzUtMTI1LCB5PTMwLTU1KSAtLT4KICAgIDwhLS0g6KaG55uG5a2Q77yM5L2/55So5LqS6KGl6ImyICNGRjE0OTMgKOa3seeyieiJsikgLS0+CiAgICA8ZyBmaWxsPSIjRkYxNDkzIj4KICAgICAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iNjUiIHI9IjUiLz4KICAgICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iODUiIHI9IjUiLz4KICAgICAgPGNpcmNsZSBjeD0iODAiIGN5PSIxMTAiIHI9IjUiLz4KICAgICAgPGNpcmNsZSBjeD0iNjAiIGN5PSI5MCIgcj0iNSIvPgogICAgICA8Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMjUiIHI9IjUiLz4KICAgICAgPGNpcmNsZSBjeD0iMTIwIiBjeT0iMTA1IiByPSI1Ii8+CiAgICAgIDxjaXJjbGUgY3g9IjcwIiBjeT0iNzUiIHI9IjUiLz4KICAgICAgPGNpcmNsZSBjeD0iMTE1IiBjeT0iMTE1IiByPSI1Ii8+CiAgICAgIDxjaXJjbGUgY3g9Ijg1IiBjeT0iODUiIHI9IjUiLz4KICAgIDwvZz4KCiAgICA8IS0tIOm7keiOk++8jOS9v+eUqOabtOa3seeahOe0q+iJsiAjMkYxMDNB77yM55Sx5bCP5ZyG5ZyI57CH57uE5oiQIC0tPgogICAgPGcgZmlsbD0iIzJGMTAzQSI+CiAgICAgIDwhLS0g6buR6I6T57CHIDEgKOmhtuS4reWBj+W3pu+8jOmBv+W8gOecvOedm+WMuuWfnykgLS0+CiAgICAgIDxjaXJjbGUgY3g9IjkwIiBjeT0iNjUiIHI9IjMiLz4KICAgICAgPGNpcmNsZSBjeD0iODUiIGN5PSI3MCIgcj0iMyIvPgogICAgICA8Y2lyY2xlIGN4PSI5NSIgY3k9IjcwIiByPSIzIi8+CiAgICAgIDxjaXJjbGUgY3g9IjkwIiBjeT0iNzUiIHI9IjMiLz4KCiAgICAgIDwhLS0g6buR6I6T57CHIDIgKOmhtuS4reWBj+WPs++8jOmBv+W8gOecvOedm+WMuuWfnykgLS0+CiAgICAgIDxjaXJjbGUgY3g9IjExMCIgY3k9IjUwIiByPSIzIi8+CiAgICAgIDxjaXJjbGUgY3g9IjEwNSIgY3k9IjU1IiByPSIzIi8+CiAgICAgIDxjaXJjbGUgY3g9IjExNSIgY3k9IjU1IiByPSIzIi8+CiAgICAgIDxjaXJjbGUgY3g9IjExMCIgY3k9IjYwIiByPSIzIi8+CiAgICAgIAogICAgICA8IS0tIOm7keiOk+ewhyAzICjkuK3lj7MpIC0tPgogICAgICA8Y2lyY2xlIGN4PSIxNDAiIGN5PSI5NSIgcj0iMyIvPgogICAgICA8Y2lyY2xlIGN4PSIxMzUiIGN5PSIxMDAiIHI9IjMiLz4KICAgICAgPGNpcmNsZSBjeD0iMTQ1IiBjeT0iMTAwIiByPSIzIi8+CiAgICAgIDxjaXJjbGUgY3g9IjE0MCIgY3k9IjEwNSIgcj0iMyIvPgoKICAgICAgPCEtLSDpu5HojpPnsIcgNCAo5bem5LiLKSAtLT4KICAgICAgPGNpcmNsZSBjeD0iNjAiIGN5PSIxMTUiIHI9IjMiLz4KICAgICAgPGNpcmNsZSBjeD0iNTUiIGN5PSIxMjAiIHI9IjMiLz4KICAgICAgPGNpcmNsZSBjeD0iNjUiIGN5PSIxMjAiIHI9IjMiLz4KICAgICAgPGNpcmNsZSBjeD0iNjAiIGN5PSIxMjUiIHI9IjMiLz4KCiAgICAgIDwhLS0g6buR6I6T57CHIDUgKOS4reW3pu+8jOmBv+W8gOecvOedm+WMuuWfnykgLS0+CiAgICAgIDxjaXJjbGUgY3g9IjcwIiBjeT0iNTUiIHI9IjMiLz4KICAgICAgPGNpcmNsZSBjeD0iNjUiIGN5PSI2MCIgcj0iMyIvPgogICAgICA8Y2lyY2xlIGN4PSI3NSIgY3k9IjYwIiByPSIzIi8+CiAgICAgIDxjaXJjbGUgY3g9IjcwIiBjeT0iNjUiIHI9IjMiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 35)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 65)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">芝士蛋糕</div>
+    <div class="shape">形状: circle | 颜色: #4A1A5D</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/4.jpg" alt="4.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIOiDjOaZrzog6auY6aWx5ZKM5bqm5pKe6Imy5qmZ6ImyIC0tPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkY5ODAwIi8+CgogIDwhLS0g5Li76IyOICjmt7Hnu7/oibIpIC0tPgogIDxyZWN0IHg9Ijk1IiB5PSIxNDAiIHdpZHRoPSIxMCIgaGVpZ2h0PSI1MCIgZmlsbD0iIzM4OEUzQyIvPgoKICA8IS0tIOaegeeugOiKseebhiAtLT4KICA8cmVjdCB4PSI3MCIgeT0iMTcwIiB3aWR0aD0iNjAiIGhlaWdodD0iMjAiIGZpbGw9IiNCREJEQkQiLz4gPCEtLSDnm4bouqsgLS0+CiAgPHJlY3QgeD0iNjUiIHk9IjE2NSIgd2lkdGg9IjcwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjOUU5RTlFIi8+IDwhLS0g55uG6L65IC0tPgogIDxlbGxpcHNlIGN4PSIxMDAiIGN5PSIxNjUiIHJ4PSIzMCIgcnk9IjUiIGZpbGw9IiM3NTc1NzUiLz4gPCEtLSDms6XlnJ8gLS0+CgogIDwhLS0g5Li76b6f6IOM56u55Y+254mHICjkuLvoibIgIzRDQUY1MCkgLSDlh6DkvZXnroDljJbvvIzpobbpg6jkuLrnnLznnZvpooTnlZnnqbrpl7QgLS0+CiAgPCEtLSDot6/lvoTorr7orqHlt6flppnlnLDlm7Tnu5UgNTB4MzAg55qE55y8552b5Yy65Z+fICh4PTc1LCB5PTMwIOWIsCB4PTEyNSwgeT02MCkg57uY5Yi2IC0tPgogIDxwYXRoIGQ9Ik0xMDAgMTYwICAgICAgICAgICAgIDwhLS0g5LuO5bqV6YOo5Lit5b+D5byA5aeLIC0tPgogICAgICAgICAgIEwxNTAgMTQ1ICAgICAgICAgICAgIDwhLS0g5Y+z5L6n5LiL6YOo5Y+254mH6L2u5buTIC0tPgogICAgICAgICAgIEwxNzUgMTAwICAgICAgICAgICAgIDwhLS0g5Y+z5L6n5Lit6YOo5Y+254mH6L2u5buTIC0tPgogICAgICAgICAgIEMxODAgNzUsIDE2MCA0MCwgMTM1IDMwIDwhLS0g5Y+z5LiK6YOo5puy57q/77yM6Z2g6L+R55y8552b5Yy65Z+f5aSW6YOoIC0tPgogICAgICAgICAgIEwxMjUgMzAgICAgICAgICAgICAgIDwhLS0g55y8552b5Yy65Z+f55qE5Y+z5LiK6KeSIC0tPgogICAgICAgICAgIEwxMjUgNjAgICAgICAgICAgICAgIDwhLS0g55y8552b5Yy65Z+f55qE5Y+z5LiL6KeSIC0tPgogICAgICAgICAgIEwxNDAgNzUgICAgICAgICAgICAgIDwhLS0g5LuO55y8552b5Yy65Z+f5ZCR5aSW5bu25Ly455qE5puy57q/IC0tPgogICAgICAgICAgIEwxNjUgMTEwICAgICAgICAgICAgIDwhLS0g5Y+z5L6n5Lit6YOo5Y+254mH6L2u5buTIC0tPgogICAgICAgICAgIEwxMDAgMTYwICAgICAgICAgICAgIDwhLS0g6L+U5Zue5bqV6YOo5Lit5b+D77yM6Zet5ZCI5Y+z5Y2K6YOo5YiGIC0tPgoKICAgICAgICAgICBNMTAwIDE2MCAgICAgICAgICAgICA8IS0tIOWGjeasoeS7juW6lemDqOS4reW/g+W8gOWni++8jOe7mOWItuW3puWNiumDqOWIhiAtLT4KICAgICAgICAgICBMNTAgMTQ1ICAgICAgICAgICAgICA8IS0tIOW3puS+p+S4i+mDqOWPtueJh+i9ruW7kyAtLT4KICAgICAgICAgICBMMjUgMTAwICAgICAgICAgICAgICA8IS0tIOW3puS+p+S4remDqOWPtueJh+i9ruW7kyAtLT4KICAgICAgICAgICBDMjAgNzUsIDQwIDQwLCA2NSAzMCA8IS0tIOW3puS4iumDqOabsue6v++8jOmdoOi/keecvOedm+WMuuWfn+WklumDqCAtLT4KICAgICAgICAgICBMNzUgMzAgICAgICAgICAgICAgICA8IS0tIOecvOedm+WMuuWfn+eahOW3puS4iuinkiAtLT4KICAgICAgICAgICBMNzUgNjAgICAgICAgICAgICAgICA8IS0tIOecvOedm+WMuuWfn+eahOW3puS4i+inkiAtLT4KICAgICAgICAgICBMNjAgNzUgICAgICAgICAgICAgICA8IS0tIOS7juecvOedm+WMuuWfn+WQkeWkluW7tuS8uOeahOabsue6vyAtLT4KICAgICAgICAgICBMMzUgMTEwICAgICAgICAgICAgICA8IS0tIOW3puS+p+S4remDqOWPtueJh+i9ruW7kyAtLT4KICAgICAgICAgICBMMTAwIDE2MCBaIiAgICAgICAgICA8IS0tIOi/lOWbnuW6lemDqOS4reW/g+W5tumXreWQiOi3r+W+hCAtLT4KICAgICAgICBmaWxsPSIjNENBRjUwIi8+CgogIDwhLS0g5Y+254mH5LiK55qE5a2U5rSeIChGZW5lc3RyYXRpb25zKSAtIOS9v+eUqOS6kuihpeeahOa1hee7v+iJsiAjOEJDMzRBIOWhq+WFhe+8jOiQpemAoOiJsuWdl+aEnyAtLT4KICA8cmVjdCB4PSI0MCIgeT0iODUiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxOCIgZmlsbD0iIzhCQzM0QSIgdHJhbnNmb3JtPSJyb3RhdGUoLTIwIDQwIDg1KSIvPgogIDxyZWN0IHg9IjE0OCIgeT0iODUiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxOCIgZmlsbD0iIzhCQzM0QSIgdHJhbnNmb3JtPSJyb3RhdGUoMjAgMTQ4IDg1KSIvPgogIDxlbGxpcHNlIGN4PSIxMDAiIGN5PSIxMTUiIHJ4PSIxMCIgcnk9IjgiIGZpbGw9IiM4QkMzNEEiLz4gPCEtLSDkuK3lpK7lrZTmtJ7miJbliIblibIgLS0+CgogIDwhLS0g5Y+254mH5Lit5b+D5Y+26ISJICjmt7Hnu7/oibIpIC0tPgogIDxyZWN0IHg9Ijk4IiB5PSI2NSIgd2lkdGg9IjQiIGhlaWdodD0iNzAiIGZpbGw9IiMzODhFM0MiLz4KCiAgPCEtLSDlh6DkvZXnvZHmoLznurnnkIYgKOa1hemHkeiJsiAjRkZDMTA3Ke+8jOeCuee8gOWcqOW3puS+p+WPtueJh+S4iiAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MCwgODApIHJvdGF0ZSgtMjUpIj4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNGRkMxMDciLz4KICAgIDxyZWN0IHg9IjgiIHk9IjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNGRkMxMDciLz4KICAgIDxyZWN0IHg9IjE2IiB5PSIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjRkZDMTA3Ii8+CiAgICA8cmVjdCB4PSIwIiB5PSI4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjRkZDMTA3Ii8+CiAgICA8cmVjdCB4PSI4IiB5PSI4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjRkZDMTA3Ii8+CiAgICA8cmVjdCB4PSIxNiIgeT0iOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIgZmlsbD0iI0ZGQzEwNyIvPgogIDwvZz4KCiAgPCEtLSDmrKHopoHlj7bniYcgKOWPs+S+p++8jOWwj+mdouenr+eCuee8gCkgLSDnroDljJbkuLrlh6DkvZXlpJrovrnlvaIgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIxMTAgMTM1LCAxMjAgMTAwLCAxMTAgODAsIDEwMCAxMDAsIDEwNSAxMzUiCiAgICAgICAgICAgZmlsbD0iIzRDQUY1MCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTAsIC0xMCkgc2NhbGUoMC42KSByb3RhdGUoMTAgMTEwIDEzNSkiLz4KICA8IS0tIOasoeimgeWPtueJh+eahOiMjiAo5rex57u/6ImyKSAtLT4KICA8cmVjdCB4PSIxMjAiIHk9IjExNSIgd2lkdGg9IjUiIGhlaWdodD0iMzAiIGZpbGw9IiMzODhFM0MiIHRyYW5zZm9ybT0icm90YXRlKDEwIDEyMCAxMTUpIi8+Cgo8L3N2Zz4=" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(30, 40)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(40, 65)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">龟背竹</div>
+    <div class="shape">形状: plant | 颜色: #4CAF50</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/5.jpg" alt="5.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiPgogIDwhLS0g6IOM5pmvIC0g6auY6aWx5ZKM5bqm5pKe6ImyIC0tPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkY2OUI0Ii8+CgogIDwhLS0g5ZKW5ZWh5p2v5Li75L2TIC0g5p6B566A5Yeg5L2V5bmz6Z2i6K6+6K6h77yM5L2/55So5rWF6Imy5Z2X5qih5ouf546755KD5p2v6LqrIC0tPgogIDxwYXRoIAogICAgZD0iTSA2MCAyMCBMIDE0MCAyMCBDIDE1NSA0MCAxNTUgMTMwIDEzMCAxNjAgUSAxMDAgMTcwIDcwIDE2MCBDIDQ1IDEzMCA0NSA0MCA2MCAyMCBaIiAKICAgIGZpbGw9IiNGOEY4RjgiIAogIC8+CgogIDwhLS0g5ZKW5ZWh5rayIC0g5Li76ImyICMzQzIyMTMgLS0+CiAgPHBhdGggCiAgICBkPSJNIDY4IDYwIEMgNjUgODAgNjUgMTQwIDczIDE1OCBRIDEwMCAxNjUgMTI3IDE1OCBDIDEzNSAxNDAgMTM1IDgwIDEzMiA2MCBaIiAKICAgIGZpbGw9IiMzQzIyMTMiIAogIC8+CgogIDwhLS0g5ZKW5ZWh5rOh5rKrIC0g5LqS6KGl6Imy77yM5L2c5Li655y8552b55qE6IOM5pmv5Yy65Z+fIC0tPgogIDwhLS0g5rOh5rKr55qE5b2i54q26K6+6K6h5Li65ZyoIHk9MzAtNTUsIHg9NzUtMTI1IOWMuuWfn+WGheS/neaMgeW5s+WdpueahOihqOmdou+8jOS7peeVmeWHuuecvOedm+epuumXtCAtLT4KICA8cGF0aCAKICAgIGQ9Ik0gNjUgMjUgUSAxMDAgMjAgMTM1IDI1IEwgMTMyIDYwIFEgMTAwIDY4IDY4IDYwIEwgNjUgMjUgWiIgCiAgICBmaWxsPSIjRTBDMzlDIiAKICAvPgoKICA8IS0tIOazoeayq+S4iueahOWHoOS9leeCueeKtue6ueeQhiAtIOmBv+W8gOecvOedm+WMuuWfnyAoeD03NS0xMjUsIHk9MzAtNTUpIC0tPgogIDwhLS0g5bem5LiK6KeS54K5IC0tPgogIDxjaXJjbGUgY3g9IjcwIiBjeT0iMjgiIHI9IjIiIGZpbGw9IiMzQzIyMTMiLz4KICA8Y2lyY2xlIGN4PSI2OCIgY3k9IjQwIiByPSIyIiBmaWxsPSIjM0MyMjEzIi8+CiAgPCEtLSDlj7PkuIrop5LngrkgLS0+CiAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iMjgiIHI9IjIiIGZpbGw9IiMzQzIyMTMiLz4KICA8Y2lyY2xlIGN4PSIxMzIiIGN5PSI0MCIgcj0iMiIgZmlsbD0iIzNDMjIxMyIvPgogIDwhLS0g5bem5LiL6KeS54K5IC0tPgogIDxjaXJjbGUgY3g9IjcwIiBjeT0iNTgiIHI9IjIiIGZpbGw9IiMzQzIyMTMiLz4KICA8Y2lyY2xlIGN4PSI3NCIgY3k9IjYyIiByPSIyIiBmaWxsPSIjM0MyMjEzIi8+CiAgPCEtLSDlj7PkuIvop5LngrkgLS0+CiAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iNTgiIHI9IjIiIGZpbGw9IiMzQzIyMTMiLz4KICA8Y2lyY2xlIGN4PSIxMjYiIGN5PSI2MiIgcj0iMiIgZmlsbD0iIzNDMjIxMyIvPgo8L3N2Zz4=" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 30)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 65)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">咖啡杯</div>
+    <div class="shape">形状: glass | 颜色: #3C2213</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/6.jpg" alt="6.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiPgogIDwhLS0gQmFja2dyb3VuZDogQm9sZCBjb250cmFzdGluZyBjb2xvciwgaG90IHBpbmsgdG8gcG9wIGFnYWluc3QgdGhlIHRlYWwgYm9vayAtLT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0ZGNjlCNCIvPgoKICA8IS0tIEJvb2sgR3JvdXA6IEFsbCBib29rIGVsZW1lbnRzIGFyZSBncm91cGVkIHRvIGFwcGx5IGEgc2xpZ2h0IHJvdGF0aW9uIGZvciBkeW5hbWlzbSAtLT4KICA8IS0tIFRoZSByb3RhdGlvbiBwaXZvdCBpcyByb3VnaGx5IHRoZSBjZW50ZXIgb2YgdGhlIGJvb2sgKDEwMCwgOTUpIC0tPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwMCA5NSkgcm90YXRlKC02KSB0cmFuc2xhdGUoLTEwMCAtOTUpIj4KCiAgICA8IS0tIE1haW4gQm9vayBDb3ZlciBTaGFwZTogVGhlIHByaW1hcnkgIzNENkE1RCBjb2xvciAtLT4KICAgIDwhLS0gRGltZW5zaW9uczogMTIwIHdpZHRoLCAxNTAgaGVpZ2h0LCBwb3NpdGlvbmVkIHNsaWdodGx5IG9mZi1jZW50ZXIgLS0+CiAgICA8cmVjdCB4PSI0MCIgeT0iMjAiIHdpZHRoPSIxMjAiIGhlaWdodD0iMTUwIiBmaWxsPSIjM0Q2QTVEIi8+CgogICAgPCEtLSBCb29rIFNwaW5lOiBBIGRhcmtlciBzaGFkZSBvZiB0aGUgbWFpbiBjb2xvciBmb3Igc3VidGxlIGNvbnRyYXN0IC0tPgogICAgPCEtLSBQb3NpdGlvbmVkIHRvIHRoZSBsZWZ0IG9mIHRoZSBtYWluIGNvdmVyIHRvIHN1Z2dlc3QgdGhpY2tuZXNzIC0tPgogICAgPHJlY3QgeD0iMzUiIHk9IjIwIiB3aWR0aD0iNSIgaGVpZ2h0PSIxNTAiIGZpbGw9IiMyQTRCNDIiLz4KCiAgICA8IS0tIEJvb2sgUGFnZXMgRWRnZSAoUmlnaHQpOiBXYXJtIHRhbiBmb3IgcGFwZXIgdGV4dHVyZSAtLT4KICAgIDwhLS0gUG9zaXRpb25lZCB0byB0aGUgcmlnaHQgb2YgdGhlIG1haW4gY292ZXIgLS0+CiAgICA8cmVjdCB4PSIxNjAiIHk9IjIwIiB3aWR0aD0iNSIgaGVpZ2h0PSIxNTAiIGZpbGw9IiNFMEIyN0EiLz4KCiAgICA8IS0tIEJvb2sgUGFnZXMgRWRnZSAoVG9wKTogV2FybSB0YW4gZm9yIHBhcGVyIHRleHR1cmUsIHZpc2libGUgZHVlIHRvIHJvdGF0aW9uIC0tPgogICAgPHJlY3QgeD0iNDAiIHk9IjE1IiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjUiIGZpbGw9IiNFMEIyN0EiLz4KCiAgICA8IS0tIEJvbGQgQWNjZW50IEJsb2NrIChMb3dlciBDb3Zlcik6IEJyaWdodCBvcmFuZ2UgZm9yIGhpZ2ggY29udHJhc3QgY29sb3IgYmxvY2sgc2VnbWVudGF0aW9uIC0tPgogICAgPCEtLSBUaGlzIHBvbHlnb24gY292ZXJzIHRoZSBsb3dlciBwYXJ0IG9mIHRoZSBib29rLCBjbGVhcmx5IHNlcGFyYXRlZCBmcm9tIHRoZSBleWUgYXJlYSAtLT4KICAgIDxwb2x5Z29uIHBvaW50cz0iNDAsMTEwIDE2MCwxMzAgMTYwLDE3MCA0MCwxNTAiIGZpbGw9IiNGRjgwMDAiLz4KCiAgICA8IS0tIFNtYWxsZXIgQWNjZW50IFRyaWFuZ2xlIChUb3AgTGVmdCk6IFdhcm0gdGFuIGZvciBhIHN1YnRsZSBkZXRhaWwsIGFsc28gYXZvaWRpbmcgZXllIGFyZWEgLS0+CiAgICA8IS0tIFRoaXMgdHJpYW5nbGUgaXMgcGxhY2VkIGluIHRoZSB0b3AtbGVmdCBjb3JuZXIsIGl0cyByaWdodCBlZGdlICh4PTcwKSBpcyBjbGVhciBvZiB0aGUgcmVxdWlyZWQgZXllIHNwYWNlICh4PTc1LTEyNSkgLS0+CiAgICA8cG9seWdvbiBwb2ludHM9IjQwLDIwIDcwLDIwIDQwLDUwIiBmaWxsPSIjRTBCMjdBIi8+CgogICAgPCEtLSBHZW9tZXRyaWMgRG90IFRleHR1cmU6IFdoaXRlIGRvdHMgd2l0aCBvcGFjaXR5IGZvciBhIGRlY29yYXRpdmUgcGF0dGVybiAtLT4KICAgIDwhLS0gUGxhY2VkIG92ZXIgdGhlIGJyaWdodCBvcmFuZ2UgYWNjZW50IGJsb2NrIGZvciB2aXNpYmlsaXR5IGFuZCBjb250cmFzdCAtLT4KICAgIDxnIGZpbGw9IiNGRkZGRkYiIG9wYWNpdHk9IjAuNCI+CiAgICAgIDxjaXJjbGUgY3g9IjYwIiBjeT0iMTIwIiByPSIyIi8+IDxjaXJjbGUgY3g9Ijc1IiBjeT0iMTI1IiByPSIyIi8+IDxjaXJjbGUgY3g9IjkwIiBjeT0iMTMwIiByPSIyIi8+CiAgICAgIDxjaXJjbGUgY3g9IjEwNSIgY3k9IjEzNSIgcj0iMiIvPiA8Y2lyY2xlIGN4PSIxMjAiIGN5PSIxNDAiIHI9IjIiLz4gPGNpcmNsZSBjeD0iMTM1IiBjeT0iMTQ1IiByPSIyIi8+CiAgICAgIDxjaXJjbGUgY3g9IjE1MCIgY3k9IjE1MCIgcj0iMiIvPgoKICAgICAgPGNpcmNsZSBjeD0iNjUiIGN5PSIxMzAiIHI9IjIiLz4gPGNpcmNsZSBjeD0iODAiIGN5PSIxMzUiIHI9IjIiLz4gPGNpcmNsZSBjeD0iOTUiIGN5PSIxNDAiIHI9IjIiLz4KICAgICAgPGNpcmNsZSBjeD0iMTEwIiBjeT0iMTQ1IiByPSIyIi8+IDxjaXJjbGUgY3g9IjEyNSIgY3k9IjE1MCIgcj0iMiIvPiA8Y2lyY2xlIGN4PSIxNDAiIGN5PSIxNTUiIHI9IjIiLz4KICAgICAgPGNpcmNsZSBjeD0iMTU1IiBjeT0iMTYwIiByPSIyIi8+CiAgICA8L2c+CgogICAgPCEtLSBHZW9tZXRyaWMgR3JpZCBUZXh0dXJlIChTcGluZSk6IFRoaW4gbGluZXMgb24gdGhlIGRhcmtlciBzcGluZSBmb3Igc3VidGxlIGRldGFpbCAtLT4KICAgIDwhLS0gVXNlcyB0aGUgd2FybSB0YW4gY29sb3IgZm9yIGEgc2xpZ2h0IGNvbnRyYXN0IC0tPgogICAgPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRTBCMjdBIiBzdHJva2Utd2lkdGg9IjAuNSIgb3BhY2l0eT0iMC42Ij4KICAgICAgICA8bGluZSB4MT0iMzYiIHkxPSIyNSIgeDI9IjM5IiB5Mj0iMjUiLz4KICAgICAgICA8bGluZSB4MT0iMzYiIHkxPSIzNSIgeDI9IjM5IiB5Mj0iMzUiLz4KICAgICAgICA8bGluZSB4MT0iMzYiIHkxPSI0NSIgeDI9IjM5IiB5Mj0iNDUiLz4KICAgICAgICA8bGluZSB4MT0iMzYiIHkxPSI1NSIgeDI9IjM5IiB5Mj0iNTUiLz4KICAgICAgICA8bGluZSB4MT0iMzYiIHkxPSI2NSIgeDI9IjM5IiB5Mj0iNjUiLz4KICAgICAgICA8bGluZSB4MT0iMzYiIHkxPSI3NSIgeDI9IjM5IiB5Mj0iNzUiLz4KICAgICAgICA8bGluZSB4MT0iMzYiIHkxPSI4NSIgeDI9IjM5IiB5Mj0iODUiLz4KICAgICAgICA8bGluZSB4MT0iMzYiIHkxPSI5NSIgeDI9IjM5IiB5Mj0iOTUiLz4KICAgICAgICA8bGluZSB4MT0iMzYiIHkxPSIxMDUiIHgyPSIzOSIgeTI9IjEwNSIvPgogICAgICAgIDxsaW5lIHgxPSIzNiIgeTE9IjExNSIgeDI9IjM5IiB5Mj0iMTE1Ii8+CiAgICAgICAgPGxpbmUgeDE9IjM2IiB5MT0iMTI1IiB4Mj0iMzkiIHkyPSIxMjUiLz4KICAgICAgICA8bGluZSB4MT0iMzYiIHkxPSIxMzUiIHgyPSIzOSIgeTI9IjEzNSIvPgogICAgICAgIDxsaW5lIHgxPSIzNiIgeTE9IjE0NSIgeDI9IjM5IiB5Mj0iMTQ1Ii8+CiAgICAgICAgPGxpbmUgeDE9IjM2IiB5MT0iMTU1IiB4Mj0iMzkiIHkyPSIxNTUiLz4KICAgICAgICA8bGluZSB4MT0iMzYiIHkxPSIxNjUiIHgyPSIzOSIgeTI9IjE2NSIvPgogICAgPC9nPgoKICAgIDwhLS0gRXllIFNwYWNlIENoZWNrOiBUaGUgYXJlYSBmb3IgZXllcyAoeT0zMC01NSwgd2lkdGggYXBwcm94IDUwKSBpcyBpbnRlbnRpb25hbGx5IGxlZnQgY2xlYXIgLS0+CiAgICA8IS0tIE9uIHRoZSB1bnJvdGF0ZWQgYm9vaywgdGhpcyBhcmVhIGlzIHJvdWdobHkgeD03NSB0byB4PTEyNSwgeT0zMCB0byB5PTYwLiAtLT4KICAgIDwhLS0gQWxsIGRlY29yYXRpdmUgZWxlbWVudHMgYXJlIHBsYWNlZCBvdXRzaWRlIG9yIGFyb3VuZCB0aGlzIGNlbnRyYWwgdXBwZXIgcmVnaW9uLCBlbnN1cmluZyBpdCdzIGEgY2xlYW4gIzNENkE1RCBibG9jay4gLS0+CiAgPC9nPgo8L3N2Zz4=" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 38)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 62)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">书</div>
+    <div class="shape">形状: book | 颜色: #3D6A5D</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/7.jpg" alt="7.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIOiDjOaZr+iJsiAtIOmHh+eUqOmrmOmlseWSjOW6pueahOaSnuiJsuiTneiJsiAtLT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzOTlGRiIvPgoKICA8IS0tIOm4reiIjOW4veS4u+S9kyAtIOmhtumDqOW4veWGoOmDqOWIhiAtLT4KICA8IS0tIOS9v+eUqOS4u+iJsiAjOUM4NjhD44CC5bi95Yag55qE5LiL6L6557yY5ZyoIHk9MzAg5aSE77yM5Li655y8552b6aKE55WZ56m66Ze044CCIC0tPgogIDxwYXRoIGQ9Ik02MCAzMCAKICAgICAgICAgICBMNjAgMjUgCiAgICAgICAgICAgQzUwIDE1IDEwMCAxMCAxNDAgMTUgCiAgICAgICAgICAgQzE1MCAyNSAxNDAgMzAgMTQwIDMwIAogICAgICAgICAgIEwxMjUgMzAgCiAgICAgICAgICAgTDc1IDMwIAogICAgICAgICAgIEw2MCAzMCBaIiAKICAgICAgICBmaWxsPSIjOUM4NjhDIi8+CgogIDwhLS0g5bi95qqQ6YOo5YiGIC0g5L2/55So55Wl5rex55qE5LqS6KGl6ImyICM3QzZDNzDvvIzmj5DkvpvlpKfog4bnmoToibLlnZfliIblibLlkozlr7nmr5TluqbjgIIgLS0+CiAgPCEtLSDluL3mqpDnmoTkuIrovrnnvJjlnKggeT01NSDlpITvvIzkuLrnnLznnZvpooTnlZnnqbrpl7TjgIIgLS0+CiAgPHBhdGggZD0iTTYwIDU1IAogICAgICAgICAgIEw3NSA1NSAKICAgICAgICAgICBMMTI1IDU1IAogICAgICAgICAgIEwxNDAgNTUgCiAgICAgICAgICAgTDE0MCA2MCAKICAgICAgICAgICBDMTUwIDc1IDEwMCA5MCA2MCA3NSAKICAgICAgICAgICBDNTAgNjAgNjAgNTUgNjAgNTUgWiIgCiAgICAgICAgZmlsbD0iIzdDNkM3MCIvPgoKICA8IS0tIOW4veWGoOe7huiKgiAtIOWHoOS9lee6v+adoeWIhuWJsu+8jOS9v+eUqOeVpea3seeahOminOiJsiAjN0M2Qzcw77yM5L+d5oyB5bmy5YeA55qE57q/5p2h44CCIC0tPgogIDxwYXRoIGQ9Ik0xMDAgMTAgTDEwMCAzMCIgc3Ryb2tlPSIjN0M2QzcwIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cGF0aCBkPSJNNzUgMTggQzg1IDIyIDk1IDI2IDEwMCAzMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjN0M2QzcwIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cGF0aCBkPSJNMTI1IDE4IEMxMTUgMjIgMTA1IDI2IDEwMCAzMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjN0M2QzcwIiBzdHJva2Utd2lkdGg9IjIiLz4KCiAgPCEtLSDluL3mqpDnurnnkIYgLSDngrnnirbnurnnkIbvvIzkvb/nlKjmtYXoibLkupLooaXoibIgI0I1QTVBOCDkvZzkuLrlsI/pnaLnp6/ngrnnvIDjgIIgLS0+CiAgPGcgZmlsbD0iI0I1QTVBOCI+CiAgICA8Y2lyY2xlIGN4PSI3NSIgY3k9IjY1IiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9Ijk1IiBjeT0iNjgiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iMTE1IiBjeT0iNjUiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iODUiIGN5PSI3NSIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSIxMDUiIGN5PSI3OCIgcj0iMS41Ii8+CiAgPC9nPgo8L3N2Zz4=" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(45, 35)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 60)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">鸭舌帽</div>
+    <div class="shape">形状: blob | 颜色: #9C868C</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/8.jpg" alt="8.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIOiDjOaZryAtIOaSnuiJsumrmOmlseWSjOapmeiJsiAtLT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0ZGNzA0MyIvPgoKICA8IS0tIOaJi+acuuS4u+S9kyAtIOS4u+iJsiAjOEZBNDhEICjkuIDnp43ljrvppbHlkoznmoTnu7/oibIpIC0tPgogIDxyZWN0IHg9IjYwIiB5PSIyMCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjE2MCIgcng9IjE1IiByeT0iMTUiIGZpbGw9IiM4RkE0OEQiLz4KCiAgPCEtLSDlsY/luZXljLrln58gLSDmtYXngbDoibLln7rlupUgI0Q5RDlEOe+8jOS4juS4u+S9k+W9ouaIkOmrmOWvueavlCAtLT4KICA8cmVjdCB4PSI2NSIgeT0iMjUiIHdpZHRoPSI3MCIgaGVpZ2h0PSIxNTAiIHJ4PSIxMCIgcnk9IjEwIiBmaWxsPSIjRDlEOUQ5Ii8+CgogIDwhLS0g5bGP5bmV6aG26YOo5bCP5a2U77yI5qih5ouf5pGE5YOP5aS077yJ77yM5ZyoeT0zMC01NeWMuuWfn+eahOi+uee8mO+8jOmBv+WFjemYu+aMoeS4reW/g+ecvOmDqOepuumXtCAtLT4KICA8Y2lyY2xlIGN4PSIxMDAiIGN5PSIyOCIgcj0iMi41IiBmaWxsPSIjNUY3NTVGIi8+CgogIDwhLS0g5bGP5bmV5YaF5a6577ya5LiA5Liq5YC+5pac55qE5Yeg5L2V6Imy5Z2XIC0g5Lqu6JOd6ImyICM0QTkwRTIgLS0+CiAgPCEtLSDor6XoibLlnZfku455PTYw5byA5aeL77yM56Gu5L+deT0zMC01NeWMuuWfn++8iOe6pjUweDMw55qE5Lit5b+D55y86YOo56m66Ze077yJ5L+d5oyB55u45a+55riF56m6IC0tPgogIDxwb2x5Z29uIHBvaW50cz0iNjUgNjAsIDEzMCA2MCwgMTM1IDE1MCwgNzAgMTcwIiBmaWxsPSIjNEE5MEUyIi8+CgogIDwhLS0g5Yeg5L2V54K554q257q555CG6KOF6aWwIC0g5bqU55So5Zyo5bGP5bmV6JOd6Imy6Imy5Z2X55qE5LiA6YOo5YiG6KGo6Z2iIC0tPgogIDwhLS0g54K555qE6aKc6Imy5L2/55So5bGP5bmV5Z+65bqV6ImyICNEOUQ5RDnvvIzlop7liqDlr7nmr5Tlkoznu4boioIgLS0+CiAgPGcgZmlsbD0iI0Q5RDlEOSI+CiAgICA8IS0tIOeCuemYteWIhuW4g+WcqOS4gOS4qui/keS8vOefqeW9ouWMuuWfn+WGhSAoeDogNzUtMTE1LCB5OiA3MC0xNDAp77yM5Y2K5b6Ecj0x77yM6Ze06Led57qmNnB4IC0tPgogICAgPCEtLSDnlLHkuo7npoHmraLkvb/nlKg8ZGVmcz7lkow8cGF0dGVybj7vvIznm7TmjqXnu5jliLbmr4/kuKrngrkgLS0+CiAgICAKICAgIDwhLS0gMTLooYwgeCA35YiX55qE54K56Zi1IC0tPgogICAgPCEtLSBSb3cgMSAtLT4KICAgIDxjaXJjbGUgY3g9Ijc4IiBjeT0iNzMiIHI9IjEiLz48Y2lyY2xlIGN4PSI4NCIgY3k9IjczIiByPSIxIi8+PGNpcmNsZSBjeD0iOTAiIGN5PSI3MyIgcj0iMSIvPjxjaXJjbGUgY3g9Ijk2IiBjeT0iNzMiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDIiIGN5PSI3MyIgcj0iMSIvPjxjaXJjbGUgY3g9IjEwOCIgY3k9IjczIiByPSIxIi8+PGNpcmNsZSBjeD0iMTE0IiBjeT0iNzMiIHI9IjEiLz4KICAgIDwhLS0gUm93IDIgLS0+CiAgICA8Y2lyY2xlIGN4PSI3OCIgY3k9Ijc5IiByPSIxIi8+PGNpcmNsZSBjeD0iODQiIGN5PSI3OSIgcj0iMSIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iNzkiIHI9IjEiLz48Y2lyY2xlIGN4PSI5NiIgY3k9Ijc5IiByPSIxIi8+PGNpcmNsZSBjeD0iMTAyIiBjeT0iNzkiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDgiIGN5PSI3OSIgcj0iMSIvPjxjaXJjbGUgY3g9IjExNCIgY3k9Ijc5IiByPSIxIi8+CiAgICA8IS0tIFJvdyAzIC0tPgogICAgPGNpcmNsZSBjeD0iNzgiIGN5PSI4NSIgcj0iMSIvPjxjaXJjbGUgY3g9Ijg0IiBjeT0iODUiIHI9IjEiLz48Y2lyY2xlIGN4PSI5MCIgY3k9Ijg1IiByPSIxIi8+PGNpcmNsZSBjeD0iOTYiIGN5PSI4NSIgcj0iMSIvPjxjaXJjbGUgY3g9IjEwMiIgY3k9Ijg1IiByPSIxIi8+PGNpcmNsZSBjeD0iMTA4IiBjeT0iODUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMTQiIGN5PSI4NSIgcj0iMSIvPgogICAgPCEtLSBSb3cgNCAtLT4KICAgIDxjaXJjbGUgY3g9Ijc4IiBjeT0iOTEiIHI9IjEiLz48Y2lyY2xlIGN4PSI4NCIgY3k9IjkxIiByPSIxIi8+PGNpcmNsZSBjeD0iOTAiIGN5PSI5MSIgcj0iMSIvPjxjaXJjbGUgY3g9Ijk2IiBjeT0iOTEiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDIiIGN5PSI5MSIgcj0iMSIvPjxjaXJjbGUgY3g9IjEwOCIgY3k9IjkxIiByPSIxIi8+PGNpcmNsZSBjeD0iMTE0IiBjeT0iOTEiIHI9IjEiLz4KICAgIDwhLS0gUm93IDUgLS0+CiAgICA8Y2lyY2xlIGN4PSI3OCIgY3k9Ijk3IiByPSIxIi8+PGNpcmNsZSBjeD0iODQiIGN5PSI5NyIgcj0iMSIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iOTciIHI9IjEiLz48Y2lyY2xlIGN4PSI5NiIgY3k9Ijk3IiByPSIxIi8+PGNpcmNsZSBjeD0iMTAyIiBjeT0iOTciIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDgiIGN5PSI5NyIgcj0iMSIvPjxjaXJjbGUgY3g9IjExNCIgY3k9Ijk3IiByPSIxIi8+CiAgICA8IS0tIFJvdyA2IC0tPgogICAgPGNpcmNsZSBjeD0iNzgiIGN5PSIxMDMiIHI9IjEiLz48Y2lyY2xlIGN4PSI4NCIgY3k9IjEwMyIgcj0iMSIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iMTAzIiByPSIxIi8+PGNpcmNsZSBjeD0iOTYiIGN5PSIxMDMiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDIiIGN5PSIxMDMiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDgiIGN5PSIxMDMiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMTQiIGN5PSIxMDMiIHI9IjEiLz4KICAgIDwhLS0gUm93IDcgLS0+CiAgICA8Y2lyY2xlIGN4PSI3OCIgY3k9IjEwOSIgcj0iMSIvPjxjaXJjbGUgY3g9Ijg0IiBjeT0iMTA5IiByPSIxIi8+PGNpcmNsZSBjeD0iOTAiIGN5PSIxMDkiIHI9IjEiLz48Y2lyY2xlIGN4PSI5NiIgY3k9IjEwOSIgcj0iMSIvPjxjaXJjbGUgY3g9IjEwMiIgY3k9IjEwOSIgcj0iMSIvPjxjaXJjbGUgY3g9IjEwOCIgY3k9IjEwOSIgcj0iMSIvPjxjaXJjbGUgY3g9IjExNCIgY3k9IjEwOSIgcj0iMSIvPgogICAgPCEtLSBSb3cgOCAtLT4KICAgIDxjaXJjbGUgY3g9Ijc4IiBjeT0iMTE1IiByPSIxIi8+PGNpcmNsZSBjeD0iODQiIGN5PSIxMTUiIHI9IjEiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjExNSIgcj0iMSIvPjxjaXJjbGUgY3g9Ijk2IiBjeT0iMTE1IiByPSIxIi8+PGNpcmNsZSBjeD0iMTAyIiBjeT0iMTE1IiByPSIxIi8+PGNpcmNsZSBjeD0iMTA4IiBjeT0iMTE1IiByPSIxIi8+PGNpcmNsZSBjeD0iMTE0IiBjeT0iMTE1IiByPSIxIi8+CiAgICA8IS0tIFJvdyA5IC0tPgogICAgPGNpcmNsZSBjeD0iNzgiIGN5PSIxMjEiIHI9IjEiLz48Y2lyY2xlIGN4PSI4NCIgY3k9IjEyMSIgcj0iMSIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iMTIxIiByPSIxIi8+PGNpcmNsZSBjeD0iOTYiIGN5PSIxMjEiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDIiIGN5PSIxMjEiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDgiIGN5PSIxMjEiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMTQiIGN5PSIxMjEiIHI9IjEiLz4KICAgIDwhLS0gUm93IDEwIC0tPgogICAgPGNpcmNsZSBjeD0iNzgiIGN5PSIxMjciIHI9IjEiLz48Y2lyY2xlIGN4PSI4NCIgY3k9IjEyNyIgcj0iMSIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iMTI3IiByPSIxIi8+PGNpcmNsZSBjeD0iOTYiIGN5PSIxMjciIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDIiIGN5PSIxMjciIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDgiIGN5PSIxMjciIHI9IjEiLz48Y2lyY2xlIGN4PSIxMTQiIGN5PSIxMjciIHI9IjEiLz4KICAgIDwhLS0gUm93IDExIC0tPgogICAgPGNpcmNsZSBjeD0iNzgiIGN5PSIxMzMiIHI9IjEiLz48Y2lyY2xlIGN4PSI4NCIgY3k9IjEzMyIgcj0iMSIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iMTMzIiByPSIxIi8+PGNpcmNsZSBjeD0iOTYiIGN5PSIxMzMiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDIiIGN5PSIxMzMiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDgiIGN5PSIxMzMiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMTQiIGN5PSIxMzMiIHI9IjEiLz4KICAgIDwhLS0gUm93IDEyIC0tPgogICAgPGNpcmNsZSBjeD0iNzgiIGN5PSIxMzkiIHI9IjEiLz48Y2lyY2xlIGN4PSI4NCIgY3k9IjEzOSIgcj0iMSIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iMTM5IiByPSIxIi8+PGNpcmNsZSBjeD0iOTYiIGN5PSIxMzkiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDIiIGN5PSIxMzkiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMDgiIGN5PSIxMzkiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMTQiIGN5PSIxMzkiIHI9IjEiLz4KICA8L2c+CgogIDwhLS0g5bGP5bmV5YaF5a6577ya5Y+m5LiA5Liq5bCP6Z2i56ev5Yeg5L2V6Imy5Z2XIC0g5rWF5qmZ6ImyICNGRkM4OETvvIzkvZzkuLrngrnnvIAgLS0+CiAgPCEtLSDkvY3kuo7lsY/luZXlt6bkuIrmlrnvvIzkuI3lubLmibDkuK3lv4PnnLzpg6jnqbrpl7QgLS0+CiAgPHJlY3QgeD0iNjYiIHk9IjM1IiB3aWR0aD0iMjAiIGhlaWdodD0iMTUiIGZpbGw9IiNGRkM4OEQiLz4KCiAgPCEtLSDmiYvmnLrkvqfovrnmjInpkq4gLSDmt7Hnu7/oibIgIzVGNzU1Ru+8jOS4juS4u+S9k+iJsuW9ouaIkOiJsuiwg+WvueavlCAtLT4KICA8cmVjdCB4PSIxNDAiIHk9IjYwIiB3aWR0aD0iNSIgaGVpZ2h0PSIyMCIgcng9IjIiIHJ5PSIyIiBmaWxsPSIjNUY3NTVGIi8+CiAgPHJlY3QgeD0iMTQwIiB5PSI5MCIgd2lkdGg9IjUiIGhlaWdodD0iMTAiIHJ4PSIyIiByeT0iMiIgZmlsbD0iIzVGNzU1RiIvPgogIDxyZWN0IHg9IjE0MCIgeT0iMTA1IiB3aWR0aD0iNSIgaGVpZ2h0PSIxMCIgcng9IjIiIHJ5PSIyIiBmaWxsPSIjNUY3NTVGIi8+Cjwvc3ZnPg==" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 25)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 70)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">手机</div>
+    <div class="shape">形状: phone | 颜色: #8FA48D</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/9.jpg" alt="9.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIEJhY2tncm91bmQgLSBWaWJyYW50IFB1cnBsZSAtLT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzhEMThGMiIvPgoKICA8IS0tIENhdCBCb2R5IChEYXJrIEdyZXkgcGFydHMpIC0tPgogIDxnIGlkPSJjYXQtZGFyay1ib2R5Ij4KICAgIDwhLS0gVG9yc28gLS0+CiAgICA8cGF0aCBkPSJNNzAgOTUgUTUwIDEyNSA3MCAxNzAgSDEzMCBRMTUwIDEyNSAxMzAgOTUgWiIgZmlsbD0iIzFBMUExQSIvPgogICAgPCEtLSBMZWZ0IExlZyAtLT4KICAgIDxwYXRoIGQ9Ik01NSAxNTAgUTQwIDE2MCA1MCAxODUgSDcwIFE4MCAxNjAgNzAgMTUwIFoiIGZpbGw9IiMxQTFBMUEiLz4KICAgIDwhLS0gUmlnaHQgTGVnIC0tPgogICAgPHBhdGggZD0iTTE0NSAxNTAgUTE2MCAxNjAgMTUwIDE4NSBIMTMwIFExMjAgMTYwIDEzMCAxNTAgWiIgZmlsbD0iIzFBMUExQSIvPgogICAgPCEtLSBUYWlsIC0tPgogICAgPHBhdGggZD0iTTE0MCAxMzUgQzE2MCAxMTUgMTcwIDE0NSAxODAgMTU1IEMxOTAgMTY1IDE4MCAxNzUgMTcwIDE2NSBaIiBmaWxsPSIjMUExQTFBIi8+CiAgPC9nPgoKICA8IS0tIENhdCBIZWFkIChEYXJrIEdyZXkgcGFydHMpIC0tPgogIDxnIGlkPSJjYXQtZGFyay1oZWFkIj4KICAgIDwhLS0gTWFpbiBoZWFkIHNoYXBlIC0tPgogICAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iNTUiIHI9IjQ1IiBmaWxsPSIjMUExQTFBIi8+CiAgICA8IS0tIExlZnQgRWFyIC0tPgogICAgPHBvbHlnb24gcG9pbnRzPSI2MCwxMCA4MCw0NSA0MCw0NSIgZmlsbD0iIzFBMUExQSIvPgogICAgPCEtLSBSaWdodCBFYXIgLS0+CiAgICA8cG9seWdvbiBwb2ludHM9IjE0MCwxMCAxMjAsNDUgMTYwLDQ1IiBmaWxsPSIjMUExQTFBIi8+CiAgPC9nPgoKICA8IS0tIEhhdCAoTWFpbiBPcmFuZ2UgLSAjRjI4RDE4KSAtLT4KICA8ZyBpZD0iaGF0Ij4KICAgIDwhLS0gSGF0IEJhc2UgLS0+CiAgICA8cGF0aCBkPSJNNzAgMjUgTDEzMCAyNSBRMTM1IDM1IDEzMCA0NSBMNzAgNDUgUTY1IDM1IDcwIDI1IFoiIGZpbGw9IiNGMjhEMTgiLz4KICAgIDwhLS0gSGF0IEJvYmJsZSAtLT4KICAgIDxjaXJjbGUgY3g9IjEwMCIgY3k9IjIwIiByPSIxMCIgZmlsbD0iI0YyOEQxOCIvPgogIDwvZz4KCiAgPCEtLSBDYXQgTGlnaHQgUGFydHMgKENyZWFtIC0gI0ZDRjhFOCkgLS0+CiAgPGcgaWQ9ImNhdC1saWdodC1wYXJ0cyI+CiAgICA8IS0tIFNub3V0IEFyZWEgLS0+CiAgICA8ZWxsaXBzZSBjeD0iMTAwIiBjeT0iNzUiIHJ4PSIzMCIgcnk9IjIwIiBmaWxsPSIjRkNGOEU4Ii8+CiAgICA8IS0tIEJlbGx5IFBhdGNoIC0tPgogICAgPHBhdGggZD0iTTgwIDEwMCBRNzAgMTIwIDgwIDE0NSBIMTIwIFExMzAgMTIwIDEyMCAxMDAgWiIgZmlsbD0iI0ZDRjhFOCIvPgogICAgPCEtLSBMZWZ0IFBhdyBUaXAgLS0+CiAgICA8Y2lyY2xlIGN4PSI2MCIgY3k9IjE4MCIgcj0iOCIgZmlsbD0iI0ZDRjhFOCIvPgogICAgPCEtLSBSaWdodCBQYXcgVGlwIC0tPgogICAgPGNpcmNsZSBjeD0iMTQwIiBjeT0iMTgwIiByPSI4IiBmaWxsPSIjRkNGOEU4Ii8+CiAgICA8IS0tIFRhaWwgVGlwIC0tPgogICAgPGNpcmNsZSBjeD0iMTcwIiBjeT0iMTY1IiByPSIxMCIgZmlsbD0iI0ZDRjhFOCIvPgogIDwvZz4KCiAgPCEtLSBGYWNlIERldGFpbHMgKERhcmtlciBHcmV5IC0gIzMzMzMzMykgLS0+CiAgPGcgaWQ9ImZhY2UtZGV0YWlscyI+CiAgICA8IS0tIE5vc2UgLS0+CiAgICA8cG9seWdvbiBwb2ludHM9Ijk1LDcwIDEwNSw3MCAxMDAsNzUiIGZpbGw9IiMzMzMzMzMiLz4KICAgIDwhLS0gTW91dGggLS0+CiAgICA8cGF0aCBkPSJNOTAgODAgUTEwMCA4NSAxMTAgODAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzMzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgICA8IS0tIFdoaXNrZXJzIERvdHMgLS0+CiAgICA8Y2lyY2xlIGN4PSI4MCIgY3k9Ijc1IiByPSIyIiBmaWxsPSIjMzMzMzMzIi8+CiAgICA8Y2lyY2xlIGN4PSI3NSIgY3k9Ijc4IiByPSIyIiBmaWxsPSIjMzMzMzMzIi8+CiAgICA8Y2lyY2xlIGN4PSIxMjAiIGN5PSI3NSIgcj0iMiIgZmlsbD0iIzMzMzMzMyIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNzgiIHI9IjIiIGZpbGw9IiMzMzMzMzMiLz4KICA8L2c+CgogIDwhLS0gVGV4dHVyZSBEb3RzIChEYXJrIEdyZXkgd2l0aCBPcGFjaXR5KSAtLT4KICA8ZyBpZD0idGV4dHVyZS1kb3RzIiBmaWxsPSIjMzMzMzMzIiBvcGFjaXR5PSIwLjMiPgogICAgPCEtLSBIZWFkIGRvdHMgLS0+CiAgICA8Y2lyY2xlIGN4PSI3MCIgY3k9IjQwIiByPSIyIi8+CiAgICA8Y2lyY2xlIGN4PSIxMzAiIGN5PSI0MCIgcj0iMiIvPgogICAgPGNpcmNsZSBjeD0iOTAiIGN5PSIzNSIgcj0iMiIvPgogICAgPGNpcmNsZSBjeD0iMTEwIiBjeT0iMzAiIHI9IjIiLz4KICAgIDwhLS0gVG9yc28gZG90cyAtLT4KICAgIDxjaXJjbGUgY3g9IjgwIiBjeT0iMTIwIiByPSIzIi8+CiAgICA8Y2lyY2xlIGN4PSIxMTAiIGN5PSIxMzAiIHI9IjMiLz4KICAgIDxjaXJjbGUgY3g9Ijk1IiBjeT0iMTUwIiByPSIzIi8+CiAgICA8Y2lyY2xlIGN4PSIxMjAiIGN5PSIxMTAiIHI9IjMiLz4KICAgIDwhLS0gTGVnIGRvdHMgLS0+CiAgICA8Y2lyY2xlIGN4PSI2NSIgY3k9IjE2NSIgcj0iMiIvPgogICAgPGNpcmNsZSBjeD0iMTM1IiBjeT0iMTY1IiByPSIyIi8+CiAgPC9nPgoKPC9zdmc+" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 30)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 45)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">毛绒猫咪</div>
+    <div class="shape">形状: blob | 颜色: #F28D18</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/10.jpg" alt="10.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIOiDjOaZr++8mumHh+eUqOmrmOmlseWSjOW6pueahOaSnuiJsuiDjOaZr++8jOespuWQiE5hbmEgQmFuYW5h6aOO5qC855qE6bKc5piO5a+55q+U6KaB5rGCIC0tPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkY2QjhCIi8+CgogIDwhLS0g6ZSF6Lqr5Li75L2T77ya566A5YyW5Li65bim5pyJ5ZyG6KeS55qE5Yeg5L2V5bmz6Z2i5b2i54q277yM5Li76Imy5Li6I0MzRDk4RSAtLT4KICA8cGF0aCBkPSJNIDQwIDE0MCBRIDMwIDE0MCAzMCAxMzAgViA3MCBRIDMwIDYwIDQwIDYwIEggMTYwIFEgMTcwIDYwIDE3MCA3MCBWIDEzMCBRIDE3MCAxNDAgMTYwIDE0MCBaIiBmaWxsPSIjQzNEOThFIi8+CgogIDwhLS0g6ZSF6Lqr57q555CG77ya5Zyo6ZSF6Lqr6KGo6Z2i5re75Yqg566A5Y2V55qE5Yeg5L2V56uW57q/6KOF6aWw77yM5L2/55So5Li76Imy6LCD55qE55Wl5rex6Imy54mI5pysI0FBQkI3NyAtLT4KICA8cmVjdCB4PSI3MCIgeT0iODAiIHdpZHRoPSIyIiBoZWlnaHQ9IjUwIiBmaWxsPSIjQUFCQjc3Ii8+CiAgPHJlY3QgeD0iMTAwIiB5PSI4MCIgd2lkdGg9IjIiIGhlaWdodD0iNTAiIGZpbGw9IiNBQUJCNzciLz4KICA8cmVjdCB4PSIxMzAiIHk9IjgwIiB3aWR0aD0iMiIgaGVpZ2h0PSI1MCIgZmlsbD0iI0FBQkI3NyIvPgoKICA8IS0tIOW3puS+p+aJi+afhO+8mueugOWMluS4uuW4puacieWchuinkueahOefqeW9ou+8jOmHh+eUqOS6kuihpeiJsiNGRjdCNTTkvZzkuLrngrnnvIAgLS0+CiAgPHJlY3QgeD0iMTUiIHk9Ijk1IiB3aWR0aD0iMjUiIGhlaWdodD0iMzAiIHJ4PSI4IiByeT0iOCIgZmlsbD0iI0ZGN0I1NCIvPgoKICA8IS0tIOWPs+S+p+aJi+afhO+8mueugOWMluS4uuW4puacieWchuinkueahOefqeW9ou+8jOmHh+eUqOS6kuihpeiJsiNGRjdCNTTkvZzkuLrngrnnvIAgLS0+CiAgPHJlY3QgeD0iMTYwIiB5PSI5NSIgd2lkdGg9IjI1IiBoZWlnaHQ9IjMwIiByeD0iOCIgcnk9IjgiIGZpbGw9IiNGRjdCNTQiLz4KCiAgPCEtLSDplIXnm5bovrnnvJjvvJrnroDljJbkuLrmpK3lnIblvaLvvIzph4fnlKjkupLooaXoibIjNjA5RUVCIC0tPgogIDxlbGxpcHNlIGN4PSIxMDAiIGN5PSI2MCIgcng9IjYwIiByeT0iMTUiIGZpbGw9IiM2MDlFRUIiLz4KCiAgPCEtLSDplIXnm5bigJznjrvnkoPigJ3pg6jliIbvvJrnroDljJbkuLrlhoXlsYLmpK3lnIblvaLvvIzph4fnlKjmtYXngbDoibIjRTBFMEUw5p2l6KGo546w546755KD6LSo5oSfIC0tPgogIDxlbGxpcHNlIGN4PSIxMDAiIGN5PSI2MCIgcng9IjU1IiByeT0iMTMiIGZpbGw9IiNFMEUwRTAiLz4KCiAgPCEtLSDplIXnm5bmiormiYvvvIjmj5DmiYvvvInvvJrnroDljJbkuLrkuIrkuIvkuKTpg6jliIbnmoTlnIbop5Lnn6nlvaLvvIzkvZzkuLrop5LoibLmj5LnlLvkuK3nmoTigJzpvLvlrZDigJ0gLS0+CiAgPCEtLSDlhbbkvY3nva7vvIh4PTkwLTExMCwgeT0yNS00Ne+8ieehruS/neS6huWcqOS4reW/g+WBj+S4iuWMuuWfn++8iHk9MzAtNTXpmYTov5HvvInnlZnlh7rnnLznnZvmiYDpnIDnmoQ1MHgzMOepuumXtCAtLT4KICA8cmVjdCB4PSI5MCIgeT0iMjUiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxMCIgcng9IjUiIHJ5PSI1IiBmaWxsPSIjRkY3QjU0Ii8+IDwhLS0g5o+Q5omL5LiK5Y2K6YOo5YiGIC0tPgogIDxyZWN0IHg9IjkwIiB5PSIzNSIgd2lkdGg9IjIwIiBoZWlnaHQ9IjEwIiByeD0iNSIgcnk9IjUiIGZpbGw9IiNDM0Q5OEUiLz4gPCEtLSDmj5DmiYvkuIvljYrpg6jliIYgLS0+Cjwvc3ZnPg==" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(45, 35)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 60)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">锅</div>
+    <div class="shape">形状: bowl | 颜色: #C3D98E</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/11.jpg" alt="11.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIOmjjuagvOimgeaxgu+8mueUqOaSnuiJsuiDjOaZr++8iOapmeOAgeiTneOAgeeyieetiemrmOmlseWSjOiJsu+8ie+8jOi/memHjOmAieaLqemrmOmlseWSjOiTneiJsiAjNEE5MEUyIC0tPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjNEE5MEUyIi8+CgogIDwhLS0g5qSF5a2Q55qE5Li75L2T57uT5p6E77yI5pyo6LSo6YOo5YiG77yJ77yM5L2/55So5rex54Gw6ImyICMzMzMzMzMg5L2c5Li65by66LCD6Imy5ZKM5a+55q+U6ImyIC0tPgogIDxnIGZpbGw9IiMzMzMzMzMiPgogICAgPCEtLSDlkI7mlK/mkpHmnrbnmoTlt6bkvqfnq4vmn7HvvIjkvY3kuo7mpIXlrZDlkI7mlrnvvIzmj5DkvpvlgL7mlpzmlK/mkpHvvIkgLS0+CiAgICA8cG9seWdvbiBwb2ludHM9IjUwLDE4NSA2MCwxODUgOTAsMjAgODAsMjAiLz4KICAgIDwhLS0g5ZCO5pSv5pKR5p6255qE5Y+z5L6n56uL5p+x77yI6YOo5YiG6KKr5biD6Z2i5ZKM5YmN5pa556uL5p+x6YGu5oyh77yJIC0tPgogICAgPHBvbHlnb24gcG9pbnRzPSIxNDUsMTg1IDE1NSwxODUgMTI1LDIwIDExNSwyMCIvPgogICAgPCEtLSDlkI7mlK/mkpHmnrbnmoTpobbpg6jmqKrmooHvvIjkvY3kuo7luIPpnaLlkozlpLTmnpXkuIvmlrnvvIkgLS0+CiAgICA8cmVjdCB4PSI4MCIgeT0iMjAiIHdpZHRoPSIzNSIgaGVpZ2h0PSI1Ii8+CiAgICA8IS0tIOWQjuaUr+aSkeaetueahOW6lemDqOaoquaige+8iOS9jeS6juW4g+mdouS4i+aWue+8iSAtLT4KICAgIDxyZWN0IHg9IjU1IiB5PSIxNjUiIHdpZHRoPSI5MCIgaGVpZ2h0PSI1Ii8+CiAgPC9nPgoKICA8IS0tIOi6uuakheeahOW4g+mdou+8jOS9v+eUqOaflOWSjOeahOexs+iJsi/mtYXmo5XoibIgI0Q3QjM4QSAtLT4KICA8IS0tIOmjjuagvOimgeaxgu+8muaegeeugOWHoOS9leW5s+mdouiuvuiuoe+8jOeUqHBhdGjlhYPntKDli77li5LluIPpnaLlvKfluqYgLS0+CiAgPHBhdGggZD0iTSA4MCAyNSBMIDExNSAyNSBDIDEzMCA2MCAxNTAgMTQ1IDE0NSAxNjUgTCA1MCAxNjUgQyA0NSAxNDUgNjAgNjAgODAgMjUgWiIgZmlsbD0iI0Q3QjM4QSIvPgoKICA8IS0tIOW4g+mdouS4iueahOeCueeKtue6ueeQhu+8jOS9v+eUqOeVpea1heeahOeBsOiJsiAjNjY2NjY2IC0tPgogIDwhLS0g6aOO5qC86KaB5rGC77ya5L2/55So5Yeg5L2V572R5qC85oiW54K554q257q555CG6KOF6aWw6YOo5YiG6KGo6Z2iIC0tPgogIDxnIGZpbGw9IiM2NjY2NjYiPgogICAgPGNpcmNsZSBjeD0iNzAiIGN5PSI3MCIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSI5NSIgY3k9Ijc1IiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9IjEyMCIgY3k9IjgwIiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9IjYwIiBjeT0iMTAwIiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9Ijg1IiBjeT0iMTA1IiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9IjExMCIgY3k9IjExMCIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSIxMzUiIGN5PSIxMTUiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iNTAiIGN5PSIxMzAiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iNzUiIGN5PSIxMzUiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iMTQwIiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9IjEyNSIgY3k9IjE0NSIgcj0iMS41Ii8+CiAgPC9nPgoKICA8IS0tIOWJjeaUr+aSkeaetu+8iOWPr+iwg+iKguinkuW6pueahOaJtuaJiy/ohb/vvInvvIzkvb/nlKjmt7HngbDoibIgIzMzMzMzMyAtLT4KICA8ZyBmaWxsPSIjMzMzMzMzIj4KICAgIDwhLS0g5bem5L6n5YmN56uL5p+x77yI5pyA6Z2g6L+R6KeG6KeS55qE5om25omL6YOo5YiG77yJIC0tPgogICAgPHBvbHlnb24gcG9pbnRzPSIyNSwxODAgMzUsMTgwIDY1LDkwIDU1LDkwIi8+CiAgICA8IS0tIOW6lemDqOaOpeinpuWcsOmdoueahOaoquaigSAtLT4KICAgIDxyZWN0IHg9IjI1IiB5PSIxNzUiIHdpZHRoPSIxMzAiIGhlaWdodD0iNSIvPgogICAgPCEtLSDmnqLovbTngrnvvIzov57mjqXliY3lkI7moYbmnrYgLS0+CiAgICA8Y2lyY2xlIGN4PSI2MCIgY3k9Ijk4IiByPSIzIiBmaWxsPSIjNjY2NjY2Ii8+CiAgPC9nPgoKICA8IS0tIOWktOaele+8jOS9v+eUqOS4u+iJsiAjRjdDOTNDIC0tPgogIDwhLS0g6aOO5qC86KaB5rGC77ya5Zyo5Lit5b+D5YGP5LiK5Yy65Z+f77yIeT0zMC01NSDpmYTov5HvvInnlZnlh7rnuqYgNTB4MzAg55qE56m66Ze057uZ55y8552bIC0tPgogIDwhLS0g6L+Z5Liq5aS05p6V55qEeeWdkOagh+S7jjMw5YiwNjDvvIzlrr3luqY1MO+8jOWujOe+juimhuebluS6huaJgOmcgOWMuuWfnyAtLT4KICA8cmVjdCB4PSI3NSIgeT0iMzAiIHdpZHRoPSI1MCIgaGVpZ2h0PSIzMCIgZmlsbD0iI0Y3QzkzQyIvPgoKPC9zdmc+" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 40)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 60)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">躺椅</div>
+    <div class="shape">形状: blob | 颜色: #F7C93C</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/12.jpg" alt="12.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIOiDjOaZr++8mumrmOmlseWSjOW6puaSnuiJsuiDjOaZryAtLT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0ZGNTcyMiIvPgoKICA8IS0tIOiYkeiPh+WPsOeBr+S4u+S9kyAtLT4KICA8Zz4KICAgIDwhLS0g5Y+w54Gv6aG26YOo5bCP5peL6ZKuIC0tPgogICAgPHJlY3QgeD0iOTUiIHk9IjEwIiB3aWR0aD0iMTAiIGhlaWdodD0iMTUiIGZpbGw9IiMyRTdEMzIiLz4KCiAgICA8IS0tIOiYkeiPh+W4ve+8mueugOWMluS4uuaJgeW5s+akreWchu+8jOS9v+eUqOS4u+iJsiAtLT4KICAgIDxlbGxpcHNlIGN4PSIxMDAiIGN5PSIzMCIgcng9IjcwIiByeT0iMjAiIGZpbGw9IiMyRTdEMzIiLz4KCiAgICA8IS0tIOiYkeiPh+W4vee6ueeQhu+8muS9v+eUqOeCueeKtue6ueeQhu+8jOavlOS4u+iJsueojea3seeahOWQjOiJsuezu+eCuee8gCAtLT4KICAgIDxjaXJjbGUgY3g9IjgwIiBjeT0iMjUiIHI9IjMiIGZpbGw9IiMxQTRDMUEiLz4KICAgIDxjaXJjbGUgY3g9IjEyMCIgY3k9IjI1IiByPSIzIiBmaWxsPSIjMUE0QzFBIi8+CiAgICA8Y2lyY2xlIGN4PSI2MCIgY3k9IjM1IiByPSIzIiBmaWxsPSIjMUE0QzFBIi8+CiAgICA8Y2lyY2xlIGN4PSIxNDAiIGN5PSIzNSIgcj0iMyIgZmlsbD0iIzFBNEMxQSIvPgogICAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iMTUiIHI9IjMiIGZpbGw9IiMxQTRDMUEiLz4KICAgIDxjaXJjbGUgY3g9IjEwMCIgY3k9IjQ1IiByPSIzIiBmaWxsPSIjMUE0QzFBIi8+CgogICAgPCEtLSDnga/mn7HkuIrpg6jvvIjlj5HlhYnljLrln5/vvInvvJrkvb/nlKjkupLooaXoibLns7vkuK3nmoTmtYXnu7/oibLvvIznlKjkuo7pq5jlr7nmr5TluqboibLlnZfliIblibIgLS0+CiAgICA8IS0tIOatpOWMuuWfnyB5PTUwIOWIsCB5PTExMO+8jOWFtuS4rSB5PTMwLTU1IOmDqOWIhu+8iOS4juiYkeiPh+W4veW6lemDqOS6pOeVjO+8ieeVmeS9nOecvOedm+WMuuWfnyAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSI1MCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjNjZCQjZBIi8+CgogICAgPCEtLSDnga/mn7HkuIvpg6jvvIjln7rluqfvvInvvJrkvb/nlKjkuLvoibLvvIzkuI7kuIrpg6jlvaLmiJDoibLlnZflr7nmr5QgLS0+CiAgICA8cmVjdCB4PSI3MCIgeT0iMTEwIiB3aWR0aD0iNjAiIGhlaWdodD0iNDAiIGZpbGw9IiMyRTdEMzIiLz4KCiAgICA8IS0tIOW8gOWFs+aMiemSru+8muS9v+eUqOS6kuihpeiJsu+8iOmHkeiJsu+8ieS9nOS4uuWwj+mdouenr+eCuee8gO+8jOaUvue9ruWcqOeBr+afseWPkeWFieWMuuWfnyAtLT4KICAgIDxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIxMCIgZmlsbD0iI0ZGRDcwMCIvPgogICAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iODAiIHI9IjYiIGZpbGw9IiNDQ0FEMDAiLz4KICA8L2c+Cjwvc3ZnPg==" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 30)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 70)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">蘑菇台灯</div>
+    <div class="shape">形状: bottle | 颜色: #2E7D32</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/13.jpg" alt="13.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIOiDjOaZr+iJsuWdl++8muWkp+iDhueahOaSnuiJsuiDjOaZr++8jOmrmOmlseWSjOapmeiJsiAtLT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0Y5NzMxNiIvPgoKICA8IS0tIOiMtumlruadr+S4u+S9k++8muaegeeugOWHoOS9leW5s+mdouiuvuiuoe+8jOS4u+iJsiAjQzNFNkIyIC0tPgogIDwhLS0g5p2v6Lqr5aSW5b2i77yM5qKv5b2iIC0tPgogIDxwYXRoIGQ9Ik0gNjAgODAgTCA1MCAxODAgTCAxNTAgMTgwIEwgMTQwIDgwIFoiIGZpbGw9IiNDM0U2QjIiLz4KCiAgPCEtLSDmna/lhoXmtrLkvZPvvJrkuI7mna/ouqvlkIzoibLvvIzmiJbnlaXmnInljLrliIbvvIzkvZPnjrDlhoXlrrnniakgLS0+CiAgPCEtLSDmtrLkvZPkuLvoibIgLS0+CiAgPHBhdGggZD0iTSA2MiA4NSBMIDUyIDE3OCBMIDE0OCAxNzggTCAxMzggODUgWiIgZmlsbD0iI0MzRTZCMiIvPgogIDwhLS0g5ray5L2T5bqV6YOo5rex6Imy6YOo5YiG77yM5aKe5Yqg5bGC5qyh5oSf77yM5L2c5Li65Li76Imy55qE5LiA5Liq5rex6Imy6LCDIC0tPgogIDxyZWN0IHg9IjUyIiB5PSIxNjAiIHdpZHRoPSI5NiIgaGVpZ2h0PSIxOCIgZmlsbD0iIzhFQ0Y3RiIvPgoKICA8IS0tIOadr+eblu+8muS6kuihpeiJsueCuee8gO+8jOaJgeW5s+WMluWHoOS9leW9oueKtiAtLT4KICA8IS0tIOadr+ebluW6lemDqOi+uee8mCAtLT4KICA8cGF0aCBkPSJNIDU4IDc4IEwgMTQyIDc4IEwgMTQ1IDcwIEwgNTUgNzAgWiIgZmlsbD0iI0QyQjQ4QyIvPgogIDwhLS0g5p2v55uW6aG26YOo5bmz6Z2iIC0tPgogIDxwYXRoIGQ9Ik0gNTUgNzAgTCAxNDUgNzAgTCAxNDggNjIgTCA1MiA2MiBaIiBmaWxsPSIjRTBEMUI4Ii8+CgogIDwhLS0g5ZC4566h77ya5Y+m5LiA5Liq5LqS6KGl6Imy77yM5oiW6ICF5LiO5p2v55uW5ZCM6ImyIC0tPgogIDwhLS0g5ZC4566h55qEIHgg5Z2Q5qCHICgxMzAtMTM4KSDpgb/lvIDnnLznnZvljLrln58gKDc1LTEyNSkgLS0+CiAgPCEtLSDlkLjnrqHnmoQgeSDlnZDmoIcgKDIwLTcwKSDpgb/lvIDnnLznnZvljLrln58gKDMwLTU1KSDnmoTkuK3lpK7mqKrlkJHkvY3nva7vvIzkvYbnlLHkuo4geCDlnZDmoIflt7LplJnlvIDvvIzlm6DmraTkuI3lvbHlk43pooTnlZnnqbrpl7QgLS0+CiAgPHJlY3QgeD0iMTMwIiB5PSIyMCIgd2lkdGg9IjgiIGhlaWdodD0iNTAiIGZpbGw9IiNEMkI0OEMiLz4KCiAgPCEtLSDlh6DkvZXngrnnirbnurnnkIboo4XppbDvvJrlupTnlKjlnKjmna/nm5bpobbpg6jvvIzlop7lvLrop4bop4nnu4boioIgLS0+CiAgPCEtLSDnurnnkIbnmoTpopzoibLkvb/nlKjmna/nm5blupXpg6jovrnnvJjnmoTpopzoibLvvIzlvaLmiJDlvq7lppnnmoTlr7nmr5QgLS0+CiAgPGcgZmlsbD0iI0QyQjQ4QyI+CiAgICA8Y2lyY2xlIGN4PSI3MCIgY3k9IjY2IiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9Ijg1IiBjeT0iNjUiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iNjciIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iMTE1IiBjeT0iNjYiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iNjUiIHI9IjEuNSIvPgogICAgPGNpcmNsZSBjeD0iNzciIGN5PSI2MyIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSI5MiIgY3k9IjY0IiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9IjEwNyIgY3k9IjYzIiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9IjEyMiIgY3k9IjY0IiByPSIxLjUiLz4KICA8L2c+CgogIDwhLS0KICAgIOS4reW/g+WBj+S4iuWMuuWfnyAoeT0zMC01NSDpmYTov5EpIOeVmeWHuueahOe6piA1MHgzMCDnqbrpl7Tnu5nnnLznnZvvvJoKICAgIOatpOiuvuiuoeS4re+8jOS7jiB4PTc1LCB5PTMwIOWIsCB4PTEyNSwgeT02MCDnmoTljLrln5/mmK/lrozlhajnlZnnmb3nmoTvvIzmsqHmnInku7vkvZXlm77lvaLlhYPntKDjgIIKICAgIOadr+eblumhtumDqCAoeT02Mikg5Y+K5Lul5LiL77yM5ZC4566hICh4PjEyNSDmiJYgeTwzMCkg5Z2H6YG/5byA5LqG5q2k56m66Ze044CCCiAgLS0+Cjwvc3ZnPg==" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 30)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 65)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">茶饮杯</div>
+    <div class="shape">形状: bottle | 颜色: #C3E6B2</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/14.jpg" alt="14.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIOiDjOaZr++8mumrmOmlseWSjOW6puapmeiJsiAtLT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0ZGOEMwMCIvPgoKICA8IS0tIOS4u+S9k++8mueUqOi/h+eahOe6uOW3vu+8jOeugOWMluS4uuWHoOS9leW5s+mdouW9oueKtu+8jOW5tueVmeWHuuecvOedm+WMuuWfnyAtLT4KICA8IS0tIOaguOW/g+S4u+iJsuS4uiAjRjBFQUQ2IC0tPgogIDxwYXRoIGQ9Ik0gNDAgMTgwIEMgMTAgMTYwIDEwIDkwIDYwIDcwIEMgNzAgNjAgNzUgNTUgTCA3NSAzMCBMIDEyNSAzMCBMIDEyNSA1NSBDIDEyNSA2MCAxMzAgNzAgMTQwIDcwIEMgMTkwIDkwIDE5MCAxNjAgMTYwIDE4MCBDIDEzMCAxOTUgNzAgMTk1IDQwIDE4MCBaIiBmaWxsPSIjRjBFQUQ2Ii8+CgogIDwhLS0g6KS255qxL+mYtOW9sSAx77ya5bqV6YOo5Y+z5L6n77yM5L2/55So5LqS6KGl6ImyICNCOEExODEgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIxMDAgMTY1LCAxNDAgMTU1LCAxNDUgMTEwLCAxMjUgOTAsIDEwMCAxMDAsIDkwIDEzMCIgZmlsbD0iI0I4QTE4MSIgLz4KCiAgPCEtLSDopLbnmrEv6Zi05b2xIDLvvJrlupXpg6jlt6bkvqfvvIzkvb/nlKjkupLooaXoibIgI0I4QTE4MSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjQ1IDE2MCwgNjAgMTQwLCA3MCA5MCwgNTAgNzUsIDMwIDEwMCwgMzUgMTQwIiBmaWxsPSIjQjhBMTgxIiAvPgoKICA8IS0tIOiktueasS/mipjlj6AgM++8muecvOedm+WMuuWfn+W3puS+p++8jOS9v+eUqOS6kuihpeiJsiAjQjhBMTgxIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iNjUgNjUsIDcwIDU4LCA3MCA0NSwgNjAgNTUiIGZpbGw9IiNCOEExODEiIC8+CgogIDwhLS0g6KS255qxL+aKmOWPoCA077ya55y8552b5Yy65Z+f5Y+z5L6n77yM5L2/55So5LqS6KGl6ImyICNCOEExODEgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIxMzUgNjUsIDEzMCA1OCwgMTMwIDQ1LCAxNDAgNTUiIGZpbGw9IiNCOEExODEiIC8+CgogIDwhLS0g5by66LCDL+aKmOWPoCA177ya55y8552b5Yy65Z+f5LiL5pa577yM5L2/55So5LqS6KGl6ImyICNBRUM2Q0YgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSI4NSA2MCwgOTUgNjUsIDExMCA2NSwgMTIwIDYwLCAxMDUgNTAsIDk1IDUwIiBmaWxsPSIjQUVDNkNGIiAvPgoKICA8IS0tIOWHoOS9lee9keagvOe6ueeQhu+8muijhemlsOiktueaseWMuuWfn+eahOS4gOmDqOWIhu+8jOS9v+eUqOS6kuihpeiJsiAjQUVDNkNGIC0tPgogIDxnIGZpbGw9IiNBRUM2Q0YiPgogICAgPHJlY3QgeD0iMTEwIiB5PSIxMTAiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiLz4KICAgIDxyZWN0IHg9IjExNSIgeT0iMTEwIiB3aWR0aD0iMiIgaGVpZ2h0PSIyIi8+CiAgICA8cmVjdCB4PSIxMjAiIHk9IjExMCIgd2lkdGg9IjIiIGhlaWdodD0iMiIvPgogICAgPHJlY3QgeD0iMTEwIiB5PSIxMTUiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiLz4KICAgIDxyZWN0IHg9IjExNSIgeT0iMTE1IiB3aWR0aD0iMiIgaGVpZ2h0PSIyIi8+CiAgICA8cmVjdCB4PSIxMjAiIHk9IjExNSIgd2lkdGg9IjIiIGhlaWdodD0iMiIvPgogICAgPHJlY3QgeD0iMTEwIiB5PSIxMjAiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiLz4KICAgIDxyZWN0IHg9IjExNSIgeT0iMTIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIyIi8+CiAgICA8cmVjdCB4PSIxMjAiIHk9IjEyMCIgd2lkdGg9IjIiIGhlaWdodD0iMiIvPgogIDwvZz4KCiAgPCEtLSDlsI/msaHmuI3ngrnnvIDvvJrkuIDkuKrmt7HoibLlnIblnIjvvIzlj4LogIPljp/lm77kuK3nmoTlsI/msaHmuI0gLS0+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iMTQwIiByPSI0IiBmaWxsPSIjOEI0NTEzIiAvPgo8L3N2Zz4=" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(45, 40)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 60)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">用过的纸巾</div>
+    <div class="shape">形状: blob | 颜色: #F0EAD6</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/15.jpg" alt="15.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIOaSnuiJsuiDjOaZr++8mumrmOmlseWSjOW6puapmeiJsiAtLT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0ZGOEMwMCIvPgoKICA8IS0tIOaenOaxgeebkuS4u+S9kyAtLT4KICA8Zz4KICAgIDwhLS0g5Li75L2T57u/6Imy5q2j6Z2iIC0tPgogICAgPHJlY3QgeD0iNjAiIHk9IjIwIiB3aWR0aD0iODAiIGhlaWdodD0iMTQwIiBmaWxsPSIjOUNDQzY1Ii8+CiAgICAKICAgIDwhLS0g6aG26YOo5bmz6Z2i77yI55Wl5b6u5YC+5pac77yM5qih5oufM0TmlYjmnpzvvIkgLS0+CiAgICA8cG9seWdvbiBwb2ludHM9IjYwLDIwIDE0MCwyMCAxNDUsMTAgNjUsMTAiIGZpbGw9IiNBOEQ2NzgiLz4KICAgIAogICAgPCEtLSDlj7PkvqfpnaLvvIjnlaXlvq7lgL7mlpzvvIzmqKHmi58zROaViOaenO+8iSAtLT4KICAgIDxwb2x5Z29uIHBvaW50cz0iMTQwLDIwIDE0NSwxMCAxNDUsMTUwIDE0MCwxNjAiIGZpbGw9IiM3Q0EwNTEiLz4KCiAgICA8IS0tIOaKveixoeiLueaenOWbvuahiO+8iOe6ouiJsu+8jOS9nOS4uueCuee8gOWSjOmjjuagvOWMluWFg+e0oO+8iSAtLT4KICAgIDxlbGxpcHNlIGN4PSI1NSIgY3k9IjQwIiByeD0iMTIiIHJ5PSIxOCIgZmlsbD0iI0U3NEMzQyIvPgogICAgPGVsbGlwc2UgY3g9IjU1IiBjeT0iMTIwIiByeD0iMTIiIHJ5PSIxOCIgZmlsbD0iI0U3NEMzQyIvPgogICAgPGVsbGlwc2UgY3g9IjE0NSIgY3k9IjcwIiByeD0iMTIiIHJ5PSIxOCIgZmlsbD0iI0U3NEMzQyIvPgogICAgPGVsbGlwc2UgY3g9IjE0NSIgY3k9IjE0MCIgcng9IjEyIiByeT0iMTgiIGZpbGw9IiNFNzRDM0MiLz4KCiAgICA8IS0tIOa1heexs+iJsuagh+etvuWMuuWfn++8jOaVheaEj+WcqOS4reW/g+WBj+S4iuWMuuWfn+eVmeWHuuecvOedm+epuumXtCAtLT4KICAgIDwhLS0g55y8552b5Yy65Z+f77yaeD03NSwgeT0zMCwgd2lkdGg9NTAsIGhlaWdodD0yNSAo5ZyoIHk9MzAtNTUg6IyD5Zu05YaFKSAtLT4KICAgIDxyZWN0IHg9IjY1IiB5PSIyNSIgd2lkdGg9IjcwIiBoZWlnaHQ9IjUiIGZpbGw9IiNGREY1RTYiLz4gPCEtLSDnnLznnZvkuIrmlrnljLrln58gLS0+CiAgICA8cmVjdCB4PSI2NSIgeT0iMzAiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyNSIgZmlsbD0iI0ZERjVFNiIvPiA8IS0tIOecvOedm+W3puS+p+WMuuWfnyAtLT4KICAgIDxyZWN0IHg9IjEyNSIgeT0iMzAiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyNSIgZmlsbD0iI0ZERjVFNiIvPiA8IS0tIOecvOedm+WPs+S+p+WMuuWfnyAtLT4KICAgIDxyZWN0IHg9IjY1IiB5PSI1NSIgd2lkdGg9IjcwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI0ZERjVFNiIvPiA8IS0tIOecvOedm+S4i+aWueWMuuWfnyAtLT4KCiAgICA8IS0tIOW6lemDqOa0i+e6ouiJsueCuee8gOadoe+8iOS6kuihpeiJsu+8iSAtLT4KICAgIDxyZWN0IHg9IjYwIiB5PSIxNDUiIHdpZHRoPSI4MCIgaGVpZ2h0PSIxNSIgZmlsbD0iI0NDNjU5QyIvPgogICAgCiAgICA8IS0tIOeCueeKtue6ueeQhuijhemlsOW6lemDqOa0i+e6ouiJsuadoSAtLT4KICAgIDxnPgogICAgICA8Y2lyY2xlIGN4PSI3MCIgY3k9IjE0OSIgcj0iMiIgZmlsbD0iI0ZGOEMwMCIvPgogICAgICA8Y2lyY2xlIGN4PSI5MCIgY3k9IjE0OSIgcj0iMiIgZmlsbD0iI0ZGOEMwMCIvPgogICAgICA8Y2lyY2xlIGN4PSIxMTAiIGN5PSIxNDkiIHI9IjIiIGZpbGw9IiNGRjhDMDAiLz4KICAgICAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iMTQ5IiByPSIyIiBmaWxsPSIjRkY4QzAwIi8+CiAgICAgIDxjaXJjbGUgY3g9IjcwIiBjeT0iMTU0IiByPSIyIiBmaWxsPSIjRkY4QzAwIi8+CiAgICAgIDxjaXJjbGUgY3g9IjkwIiBjeT0iMTU0IiByPSIyIiBmaWxsPSIjRkY4QzAwIi8+CiAgICAgIDxjaXJjbGUgY3g9IjExMCIgY3k9IjE1NCIgcj0iMiIgZmlsbD0iI0ZGOEMwMCIvPgogICAgICA8Y2lyY2xlIGN4PSIxMzAiIGN5PSIxNTQiIHI9IjIiIGZpbGw9IiNGRjhDMDAiLz4KICAgIDwvZz4KICA8L2c+CgogIDwhLS0g5ZC4566hIC0tPgogIDxnIHRyYW5zZm9ybT0icm90YXRlKC0yMCAxNDAgNSkiPgogICAgPCEtLSDlkLjnrqHkuLvkvZPvvIjnmb3oibLvvIkgLS0+CiAgICA8cmVjdCB4PSIxNDAiIHk9IjUiIHdpZHRoPSI1IiBoZWlnaHQ9IjQwIiBmaWxsPSJ3aGl0ZSIvPgogICAgPCEtLSDlkLjnrqHkuIrnmoTmtIvnuqLoibLmnaHnurnvvIjkupLooaXoibLngrnnvIDvvIkgLS0+CiAgICA8cmVjdCB4PSIxNDAiIHk9IjEwIiB3aWR0aD0iNSIgaGVpZ2h0PSIzIiBmaWxsPSIjQ0M2NTlDIi8+CiAgICA8cmVjdCB4PSIxNDAiIHk9IjE4IiB3aWR0aD0iNSIgaGVpZ2h0PSIzIiBmaWxsPSIjQ0M2NTlDIi8+CiAgICA8cmVjdCB4PSIxNDAiIHk9IjI2IiB3aWR0aD0iNSIgaGVpZ2h0PSIzIiBmaWxsPSIjQ0M2NTlDIi8+CiAgICA8cmVjdCB4PSIxNDAiIHk9IjM0IiB3aWR0aD0iNSIgaGVpZ2h0PSIzIiBmaWxsPSIjQ0M2NTlDIi8+CiAgPC9nPgo8L3N2Zz4=" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 30)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 65)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">果汁盒</div>
+    <div class="shape">形状: rect | 颜色: #9CCC65</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/16.jpg" alt="16.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIOiDjOaZrzog5aSn6IOG55qE5pKe6Imy77yM5L2/55So6auY6aWx5ZKM5bqm55qE5qmZ6ImyIC0tPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkY5OTMzIi8+CgogIDwhLS0g6IO25Y6f6JuL55m957KJ5qG25Li75L2TOiDkuLvopoHpopzoibIgIzhBQzdFNiAtLT4KICA8IS0tIOeugOWMluS4uueVpeW+ruWQkeWGheaUtue8qeeahOair+W9ouWkmui+ueW9ou+8jOS7o+ihqOahtui6qyAtLT4KICA8cG9seWdvbiBwb2ludHM9IjQ1LDMwIDE1NSwzMCAxNTAsMTc1IDUwLDE3NSIgZmlsbD0iIzhBQzdFNiIvPgoKICA8IS0tIOahtuebluS+p+mdojog5byV5YWl5LqS6KGl6ImyICNCMEU2REQgKOa1heiWhOiNt+e7vykgLS0+CiAgPCEtLSDkvY3kuo7mobbouqvkuYvkuIrvvIzmqKHmi5/mobbnm5bnmoTlnoLnm7Tpg6jliIYgLS0+CiAgPHJlY3QgeD0iNDUiIHk9IjIwIiB3aWR0aD0iMTEwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjQjBFNkREIi8+CgogIDwhLS0g5qG255uW6aG26YOoOiDmobbnm5bnmoTmpK3lnIblvaLpobbpnaIgLS0+CiAgPCEtLSDkvY3kuo7mobbnm5bkvqfpnaLkuYvkuIrvvIznlaXlvq7otoXlh7rvvIzlop7liqDnq4vkvZPmhJ8gLS0+CiAgPGVsbGlwc2UgY3g9IjEwMCIgY3k9IjIwIiByeD0iNTUiIHJ5PSI4IiBmaWxsPSIjQjBFNkREIi8+CgogIDwhLS0g55y8552b6aKE55WZ5Yy65Z+fOiDlnKjmobbkuLvkvZPkuIrnlZnlh7ogNTB4MjUg55qE56m66Ze0IC0tPgogIDwhLS0g5aGr5YWF5Li66Z2e5bi45rWF55qE6JOd6ImyICNFMEYyRjfvvIzku6XljLrliIbkuo7kuLvkvZPpopzoibLvvIzooajnpLrnqbrnmb3ljLrln58gLS0+CiAgPCEtLSDkvY3kuo7kuK3lv4PlgY/kuIrljLrln5/vvIx5IOWdkOagh+iMg+WbtOeyvuehruiQveWcqCAzMC01NSDkuYvpl7QgLS0+CiAgPHJlY3QgeD0iNzUiIHk9IjMwIiB3aWR0aD0iNTAiIGhlaWdodD0iMjUiIGZpbGw9IiNFMEYyRjciLz4KCiAgPCEtLSDmobbnm5boo4XppbA6IOWHoOS9leeCueeKtue6ueeQhu+8jOS9v+eUqOavlOahtuebluabtOa3seeahOiWhOiNt+e7v+iJsiAjOTBDMEIwIC0tPgogIDwhLS0g5Zyo5qG255uW6aG26YOo55qE5qSt5ZyG5b2i6KGo6Z2i5re75Yqg5LiA57O75YiX5bCP5ZyG54K5IC0tPgogIDxnIGZpbGw9IiM5MEMwQjAiPgogICAgPGNpcmNsZSBjeD0iNzAiIGN5PSIxNyIgcj0iMS41Ii8+CiAgICA8Y2lyY2xlIGN4PSI4NSIgY3k9IjE3IiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9IjEwMCIgY3k9IjE3IiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9IjExNSIgY3k9IjE3IiByPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9IjEzMCIgY3k9IjE3IiByPSIxLjUiLz4KICA8L2c+CgogIDwhLS0gIlVORkxBVk9SRUQiIOagh+etvjog56ys5LqM5Liq5LqS6KGl6ImyICNGRkRBQjkgKOicnOahg+apmSkgLS0+CiAgPCEtLSDnroDljJbkuLrluKbmnInlnIbop5LnmoTnn6nlvaLvvIzkvY3kuo7mobbouqvlj7PkuIvmlrkgLS0+CiAgPHJlY3QgeD0iMTEwIiB5PSIxNDUiIHdpZHRoPSI0MCIgaGVpZ2h0PSIxNSIgcng9IjUiIHJ5PSI1IiBmaWxsPSIjRkZEQUI5Ii8+Cjwvc3ZnPg==" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 35)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 65)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">胶原蛋白粉桶</div>
+    <div class="shape">形状: circle | 颜色: #8AC7E6</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/17.jpg" alt="17.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIOiDjOaZr++8mumrmOmlseWSjOW6pueahOaSnuiJsuiDjOaZryAo5qmZ6ImyKSAtLT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0U3NEMzQyIvPgoKICA8IS0tIOiKneWjq+Wdl+S4u+S9kyAo5Li76ImyICNGMEM0NUIpIC0tPgogIDwhLS0g6L+Z5piv5LiA5Liq56iN5b6u5YC+5pac55qE5qKv5b2i77yM5qih5ouf6Iqd5aOr5Z2X55qE5q2j6Z2iIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iNDAsNDUgMTYwLDQ1IDE1MCwxNTUgMzAsMTU1IiBmaWxsPSIjRjBDNDVCIi8+CgogIDwhLS0g6Iqd5aOr5Z2X5Y+z5L6n55qE5Y6a5bqmL+mYtOW9sSAo5LqS6KGl6ImyICNFMDdCMzkpIC0tPgogIDwhLS0g6L+Z5piv5LiA5Liq56qE55qE5qKv5b2i77yM5o+Q5L6b56uL5L2T5oSfIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iMTYwLDQ1IDE2NSw1MCAxNTUsMTYwIDE1MCwxNTUiIGZpbGw9IiNFMDdCMzkiLz4KCiAgPCEtLSDoip3lo6vlnZflupXpg6jnmoTljprluqYv6Zi05b2xICjkupLooaXoibIgI0UwN0IzOSkgLS0+CiAgPCEtLSDlj6bkuIDkuKrnqoTnmoTmoq/lvaLvvIzmj5Dkvpvnq4vkvZPmhJ8gLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIzMCwxNTUgMTUwLDE1NSAxNTUsMTYwIDM1LDE2MCIgZmlsbD0iI0UwN0IzOSIvPgoKICA8IS0tIOiKneWjq+Wdl+ihqOmdoue6ueeQhiAo54K554q257q555CG77yM5L2/55SoICNEREEwNDAg6aKc6Imy77yM55Wl5pqX5LqO5Li76ImyKSAtLT4KICA8IS0tIOS9jeS6juiKneWjq+Wdl+eahOWPs+S4i+WMuuWfn++8jOmBv+W8gOecvOedm+mihOeVmeepuumXtCAtLT4KICA8ZyBmaWxsPSIjRERBMDQwIj4KICAgIDxjaXJjbGUgY3g9IjEzMCIgY3k9IjExMCIgcj0iMiIvPgogICAgPGNpcmNsZSBjeD0iMTQwIiBjeT0iMTE1IiByPSIyIi8+CiAgICA8Y2lyY2xlIGN4PSIxMjAiIGN5PSIxMjAiIHI9IjIiLz4KICAgIDxjaXJjbGUgY3g9IjEzNSIgY3k9IjEyNSIgcj0iMiIvPgogICAgPGNpcmNsZSBjeD0iMTEwIiBjeT0iMTMwIiByPSIyIi8+CiAgICA8Y2lyY2xlIGN4PSIxMjUiIGN5PSIxMzUiIHI9IjIiLz4KICAgIDxjaXJjbGUgY3g9IjE0MCIgY3k9IjE0MCIgcj0iMiIvPgogICAgPGNpcmNsZSBjeD0iMTA1IiBjeT0iMTEwIiByPSIyIi8+CiAgICA8Y2lyY2xlIGN4PSIxMTUiIGN5PSIxMDAiIHI9IjIiLz4KICAgIDxjaXJjbGUgY3g9IjEzMCIgY3k9IjEwMCIgcj0iMiIvPgogIDwvZz4KCiAgPCEtLSAKICAgIOagueaNruimgeaxgu+8jOWcqOS4reW/g+WBj+S4iuWMuuWfnyAoeT0zMC01NSDpmYTov5EpIOeVmeWHuue6piA1MHgzMCDnmoTnqbrpl7Tnu5nnnLznnZvjgIIKICAgIOW9k+WJjeiKneWjq+S4u+S9kyAocG9seWdvbikg55qE6aG26YOoIHkg5Z2Q5qCH5Li6IDQ177yM5bqV6YOoIHkg5Z2Q5qCH5Li6IDE1NeOAggogICAgeCDlnZDmoIfku44gNDAg5YiwIDE2MOOAggogICAg6aKE55WZ55y8552b56m66Ze0ICjnuqYgNTB4MzApOiDkvovlpoLvvIzlj6/ku6Xmg7PosaHnnLznnZvkvY3kuo4gKHg9NzUsIHk9NDApIOWIsCAoeD0xMjUsIHk9NzApIOeahOWMuuWfn++8jAogICAg6L+Z5Liq5Yy65Z+f5L2N5LqO6Iqd5aOr5Z2X55qE5Li75L2T5LiK77yM5bm25LiU5rKh5pyJ6KKr57q555CG5oiW5YW25LuW5YWD57Sg6KaG55uW44CCCiAgLS0+Cjwvc3ZnPg==" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(45, 45)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 75)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">芝士块</div>
+    <div class="shape">形状: rect | 颜色: #F0C45B</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/18.jpg" alt="18.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIOiDjOaZryAtIOaSnuiJsumrmOmlseWSjOW6puapmeiJsiAtLT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0ZGQjc0RCIvPgoKICA8IS0tIOeil+S9kyAtIOaegeeugOWHoOS9leW5s+mdouiuvuiuoSAtLT4KICA8Zz4KICAgIDwhLS0g56KX55qE6L6557yYIC0tPgogICAgPHBhdGggZD0iTSA0MCAxMzAgQyA0NSAxMjAsIDE1NSAxMjAsIDE2MCAxMzAgTCAxNjAgMTM4IEMgMTU1IDEyOCwgNDUgMTI4LCA0MCAxMzggWiIgZmlsbD0iI0MwQzBDMCIvPgogICAgPCEtLSDnopfnmoTkuLvkvZMgLS0+CiAgICA8cGF0aCBkPSJNIDQwIDEzMCBDIDMwIDE2NSwgMzAgMTg1LCAxMDAgMTg1IEMgMTcwIDE4NSwgMTcwIDE2NSwgMTYwIDEzMCBaIiBmaWxsPSIjRTBFMEUwIi8+CiAgPC9nPgoKICA8IS0tIOWIqOWGsOWfuuW6lSAtIOaegeeugOakreWchuW9ou+8jOW4puacieWHoOS9leeCueeKtue6ueeQhiAtLT4KICA8Zz4KICAgIDxlbGxpcHNlIGN4PSIxMDAiIGN5PSIxMTAiIHJ4PSI2MCIgcnk9IjM1IiBmaWxsPSIjRkZGNUY1Ii8+CiAgICA8IS0tIOeCueeKtue6ueeQhiAtLT4KICAgIDxjaXJjbGUgY3g9IjcwIiBjeT0iMTA1IiByPSIxLjUiIGZpbGw9IiNGMEYwRjAiLz4KICAgIDxjaXJjbGUgY3g9Ijg1IiBjeT0iOTgiIHI9IjEuNSIgZmlsbD0iI0YwRjBGMCIvPgogICAgPGNpcmNsZSBjeD0iOTgiIGN5PSI5MCIgcj0iMS41IiBmaWxsPSIjRjBGMEYwIi8+CiAgICA8Y2lyY2xlIGN4PSIxMTUiIGN5PSI5NSIgcj0iMS41IiBmaWxsPSIjRjBGMEYwIi8+CiAgICA8Y2lyY2xlIGN4PSIxMzAiIGN5PSIxMDIiIHI9IjEuNSIgZmlsbD0iI0YwRjBGMCIvPgogICAgPGNpcmNsZSBjeD0iNjUiIGN5PSIxMTUiIHI9IjEuNSIgZmlsbD0iI0YwRjBGMCIvPgogICAgPGNpcmNsZSBjeD0iODAiIGN5PSIxMjAiIHI9IjEuNSIgZmlsbD0iI0YwRjBGMCIvPgogICAgPGNpcmNsZSBjeD0iOTUiIGN5PSIxMjUiIHI9IjEuNSIgZmlsbD0iI0YwRjBGMCIvPgogICAgPGNpcmNsZSBjeD0iMTEwIiBjeT0iMTIyIiByPSIxLjUiIGZpbGw9IiNGMEYwRjAiLz4KICAgIDxjaXJjbGUgY3g9IjEyNSIgY3k9IjExOCIgcj0iMS41IiBmaWxsPSIjRjBGMEYwIi8+CiAgICA8Y2lyY2xlIGN4PSIxMzUiIGN5PSIxMTAiIHI9IjEuNSIgZmlsbD0iI0YwRjBGMCIvPgogICAgPGNpcmNsZSBjeD0iNzgiIGN5PSIxMTAiIHI9IjEuNSIgZmlsbD0iI0YwRjBGMCIvPgogICAgPGNpcmNsZSBjeD0iMTA1IiBjeT0iMTA1IiByPSIxLjUiIGZpbGw9IiNGMEYwRjAiLz4KICA8L2c+CgogIDwhLS0g6Iqt5LmQ5YiH54mHIC0g5LulICNFNzk5OTkg5Li65Li76Imy77yM6L6F5Lul5LqS6KGl6ImyICNBMkQwOUEg5L2c5Li654K557yA77yM5aSn6IOG6Imy5Z2X5YiG5YmyIC0tPgogIDxnPgogICAgPCEtLSBTbGljZSAxICjlt6bkuIopIC0tPgogICAgPHBhdGggZD0iTSA2MCA4NSBDIDU1IDkwLCA1NSAxMDAsIDYwIDEwNSBMIDY1IDEwMCBDIDY1IDk1LCA2NSA5MCwgNjAgODUgWiIgZmlsbD0iI0EyRDA5QSIvPgogICAgPHBhdGggZD0iTSA2MSA4NiBDIDU2IDkxLCA1NiA5OSwgNjEgMTA0IEwgNjQgOTkgQyA2NCA5NCwgNjQgOTEsIDYxIDg2IFoiIGZpbGw9IiNFNzk5OTkiLz4KCiAgICA8IS0tIFNsaWNlIDIgKOW3puS4rSkgLS0+CiAgICA8cGF0aCBkPSJNIDU1IDEwMCBDIDUwIDEwNSwgNTAgMTE1LCA1NSAxMjAgTCA2MCAxMTUgQyA2MCAxMTAsIDYwIDEwNSwgNTUgMTAwIFoiIGZpbGw9IiNBMkQwOUEiLz4KICAgIDxwYXRoIGQ9Ik0gNTYgMTAxIEMgNTEgMTA2LCA1MSAxMTQsIDU2IDExOSBMIDU5IDExNCBDIDU5IDEwOSwgNTkgMTA2LCA1NiAxMDEgWiIgZmlsbD0iI0U3OTk5OSIvPgoKICAgIDwhLS0gU2xpY2UgMyAo5bem5LiLKSAtLT4KICAgIDxwYXRoIGQ9Ik0gNTggMTE1IEMgNTMgMTIwLCA1MyAxMzAsIDU4IDEzNSBMIDYzIDEzMCBDIDYzIDEyNSwgNjMgMTIwLCA1OCAxMTUgWiIgZmlsbD0iI0EyRDA5QSIvPgogICAgPHBhdGggZD0iTSA1OSAxMTYgQyA1NCAxMjEsIDU0IDEyOSwgNTkgMTM0IEwgNjIgMTI5IEMgNjIgMTI0LCA2MiAxMjEsIDU5IDExNiBaIiBmaWxsPSIjRTc5OTk5Ii8+CgogICAgPCEtLSBTbGljZSA0ICjlt6bkuIvlgY/lj7MpIC0tPgogICAgPHBhdGggZD0iTSA3MCAxMzAgQyA2NSAxMzUsIDY1IDE0NSwgNzAgMTUwIEwgNzUgMTQ1IEMgNzUgMTQwLCA3NSAxMzUsIDcwIDEzMCBaIiBmaWxsPSIjQTJEMDlBIi8+CiAgICA8cGF0aCBkPSJNIDcxIDEzMSBDIDY2IDEzNiwgNjYgMTQ0LCA3MSAxNDkgTCA3NCAxNDQgQyA3NCAxMzksIDc0IDEzNiwgNzEgMTMxIFoiIGZpbGw9IiNFNzk5OTkiLz4KCiAgICA8IS0tIFNsaWNlIDUgKOW6lemDqOS4remXtCkgLS0+CiAgICA8cGF0aCBkPSJNIDg1IDE0MCBDIDgwIDE0NSwgODAgMTU1LCA4NSAxNjAgTCA5MCAxNTUgQyA5MCAxNTAsIDkwIDE0NSwgODUgMTQwIFoiIGZpbGw9IiNBMkQwOUEiLz4KICAgIDxwYXRoIGQ9Ik0gODYgMTQxIEMgODEgMTQ2LCA4MSAxNTQsIDg2IDE1OSBMIDg5IDE1NCBDIDg5IDE0OSwgODkgMTQ2LCA4NiAxNDEgWiIgZmlsbD0iI0U3OTk5OSIvPgoKICAgIDwhLS0gU2xpY2UgNiAo5Y+z5LiLKSAtLT4KICAgIDxwYXRoIGQ9Ik0gMTAwIDE0NSBDIDk1IDE1MCwgOTUgMTYwLCAxMDAgMTY1IEwgMTA1IDE2MCBDIDEwNSAxNTUsIDEwNSAxNTAsIDEwMCAxNDUgWiIgZmlsbD0iI0EyRDA5QSIvPgogICAgPHBhdGggZD0iTSAxMDEgMTQ2IEMgOTYgMTUxLCA5NiAxNTksIDEwMSAxNjQgTCAxMDQgMTU5IEMgMTA0IDE1NCwgMTA0IDE1MSwgMTAxIDE0NiBaIiBmaWxsPSIjRTc5OTk5Ii8+CgogICAgPCEtLSBTbGljZSA3ICjlj7PkuIvlgY/lt6YpIC0tPgogICAgPHBhdGggZD0iTSAxMTUgMTQwIEMgMTEwIDE0NSwgMTEwIDE1NSwgMTE1IDE2MCBMIDEyMCAxNTUgQyAxMjAgMTUwLCAxMjAgMTQ1LCAxMTUgMTQwIFoiIGZpbGw9IiNBMkQwOUEiLz4KICAgIDxwYXRoIGQ9Ik0gMTE2IDE0MSBDIDExMSAxNDYsIDExMSAxNTQsIDExNiAxNTkgTCAxMTkgMTU0IEMgMTE5IDE0OSwgMTE5IDE0NiwgMTE2IDE0MSBaIiBmaWxsPSIjRTc5OTk5Ii8+CgogICAgPCEtLSBTbGljZSA4ICjlj7PkuK0pIC0tPgogICAgPHBhdGggZD0iTSAxMzAgMTMwIEMgMTI1IDEzNSwgMTI1IDE0NSwgMTMwIDE1MCBMIDEzNSAxNDUgQyAxMzUgMTQwLCAxMzUgMTM1LCAxMzAgMTMwIFoiIGZpbGw9IiNBMkQwOUEiLz4KICAgIDxwYXRoIGQ9Ik0gMTMxIDEzMSBDIDEyNiAxMzYsIDEyNiAxNDQsIDEzMSAxNDkgTCAxMzQgMTQ0IEMgMTM0IDEzOSwgMTM0IDEzNiwgMTMxIDEzMSBaIiBmaWxsPSIjRTc5OTk5Ii8+CgogICAgPCEtLSBTbGljZSA5ICjlj7PkuIopIC0tPgogICAgPHBhdGggZD0iTSAxNDAgMTE1IEMgMTM1IDEyMCwgMTM1IDEzMCwgMTQwIDEzNSBMIDE0NSAxMzAgQyAxNDUgMTI1LCAxNDUgMTIwLCAxNDAgMTE1IFoiIGZpbGw9IiNBMkQwOUEiLz4KICAgIDxwYXRoIGQ9Ik0gMTQxIDExNiBDIDEzNiAxMjEsIDEzNiAxMjksIDE0MSAxMzQgTCAxNDQgMTI5IEMgMTQ0IDEyNCwgMTQ0IDEyMSwgMTQxIDExNiBaIiBmaWxsPSIjRTc5OTk5Ii8+CiAgPC9nPgoKICA8IS0tIOWltuayuSAtIOaegeeugOWHoOS9lei3r+W+hOihqOekuuiTrOadvuaEn++8jOmrmOWvueavlOW6pueahOiJsuWdl+WIhuWJsiAtLT4KICA8Zz4KICAgIDwhLS0g5Li75L2T5aW25rK55ZuiIC0tPgogICAgPHBhdGggZD0iTSAxMDAgODAgQyAxMjAgNzUsIDEzMCA4NSwgMTMwIDEwNSBDIDEzMCAxMjUsIDEwMCAxMzAsIDcwIDEwNSBDIDcwIDg1LCA4MCA3NSwgMTAwIDgwIFoiIGZpbGw9IiNGRkZGRkYiLz4KICAgIDwhLS0g5aW25rK55oqY5Y+gL+WFieW9seaViOaenCAtLT4KICAgIDxwYXRoIGQ9Ik0gMTA1IDc1IEMgMTE1IDcwLCAxMjUgODAsIDEyMCA5MCBDIDExNSAxMDAsIDEwNSA5NSwgMTA1IDc1IFoiIGZpbGw9IiNGMEYwRjAiLz4KICAgIDxwYXRoIGQ9Ik0gOTAgODAgQyA4MCA3NSwgNzUgODUsIDgwIDk1IEMgODUgMTA1LCA5NSAxMDAsIDkwIDgwIFoiIGZpbGw9IiNGMEYwRjAiLz4KICAgIDxwYXRoIGQ9Ik0gMTEwIDkwIEMgMTIwIDg1LCAxMjUgOTUsIDEyMCAxMDUgQyAxMTUgMTE1LCAxMDUgMTEwLCAxMTAgOTAgWiIgZmlsbD0iI0YwRjBGMCIvPgogICAgPHBhdGggZD0iTSA4NSA5NSBDIDc1IDkwLCA3MCAxMDAsIDc1IDExMCBDIDgwIDEyMCwgOTAgMTE1LCA4NSA5NSBaIiBmaWxsPSIjRjBGMEYwIi8+CiAgICA8IS0tIOWltuayuemhtumDqO+8jOacgOmrmOeCuSB5PTYw77yM56Gu5L+d5Lit5b+D5YGP5LiK5Yy65Z+fIHk9MzAtNTUg55WZ57uZ55y8552bIC0tPgogICAgPHBhdGggZD0iTSAxMDAgNjAgQyAxMDUgNTUsIDExMCA2MCwgMTA1IDcwIEMgMTAwIDc1LCA5NSA3MCwgMTAwIDYwIFoiIGZpbGw9IiNGRkZGRkYiLz4KICAgIDxwYXRoIGQ9Ik0gMTAwIDYyIEMgMTAzIDU5LCAxMDcgNjIsIDEwNCA2OCBDIDEwMSA3MSwgOTggNjgsIDEwMCA2MiBaIiBmaWxsPSIjRjBGMEYwIi8+CiAgPC9nPgo8L3N2Zz4=" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 35)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 60)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">芭乐冰</div>
+    <div class="shape">形状: fruit | 颜色: #E79999</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/19.jpg" alt="19.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIEJhY2tncm91bmQ6IEhpZ2gtc2F0dXJhdGlvbiBjb250cmFzdGluZyBjb2xvciAoY29yYWwgcGluaykgLS0+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNGRjZCNkIiLz4KCiAgPCEtLSBDYWtlIEJvZHkgLS0+CiAgPGcgaWQ9ImZydWl0LWNha2UiPgogICAgPCEtLSBDYWtlIEJhc2UgKE92ZXJhbGwgYmxvY2sgc2hhcGUgZm9yIGRlcHRoL3NoYWRvdykgLS0+CiAgICA8IS0tIFRoaXMgcG9seWdvbiBkZWZpbmVzIHRoZSBib3R0b20sIHJpZ2h0IHNpZGUsIGFuZCB0b3AtYmFjayBlZGdlIG9mIHRoZSBjYWtlIHN0cnVjdHVyZSAtLT4KICAgIDxwb2x5Z29uIHBvaW50cz0iMzAsMTcwIDE3MCwxNzAgMTgwLDE2MCAxODAsNjAgMTcwLDUwIDMwLDUwIDIwLDYwIDIwLDE2MCBaIiBmaWxsPSIjRERDQkE4Ii8+IAoKICAgIDwhLS0gQ2FrZSBGcm9udCBGYWNlIChNYWluIHNwb25nZSBjb2xvcikgLS0+CiAgICA8IS0tIFRoaXMgcmVjdGFuZ2xlIGNvdmVycyB0aGUgZnJvbnQgc3VyZmFjZSBvZiB0aGUgY2FrZSwgb24gdG9wIG9mIHRoZSBiYXNlIHBvbHlnb24gLS0+CiAgICA8cmVjdCB4PSIzMCIgeT0iNjAiIHdpZHRoPSIxNDAiIGhlaWdodD0iMTEwIiBmaWxsPSIjRjVFOEM3Ii8+CgogICAgPCEtLSBDYWtlIFRvcCBTdXJmYWNlIChNYWluIHNwb25nZSBjb2xvciwgdmlzaWJsZSBmcm9tIHNsaWdodGx5IGFib3ZlKSAtLT4KICAgIDwhLS0gVGhpcyBwb2x5Z29uIGRlZmluZXMgdGhlIGZsYXQgdG9wIHN1cmZhY2Ugb2YgdGhlIGNha2UgbGF5ZXJzIC0tPgogICAgPHBvbHlnb24gcG9pbnRzPSIzMCw2MCAxNzAsNjAgMTcwLDUwIDMwLDUwIFoiIGZpbGw9IiNGNUU4QzciLz4KCiAgICA8IS0tIEludGVybmFsIENyZWFtIExheWVycyAob24gdGhlIGZyb250IGZhY2UpIC0tPgogICAgPHJlY3QgeD0iMzAiIHk9IjE0MCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSIxMCIgZmlsbD0iI0ZERkJGNyIvPgogICAgPHJlY3QgeD0iMzAiIHk9IjEwMCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSIxMCIgZmlsbD0iI0ZERkJGNyIvPgoKICAgIDwhLS0gVG9wIENyZWFtIE1vdW5kIChSb3VuZGVkIHJlY3RhbmdsZSkgLS0+CiAgICA8IS0tIFRoaXMgbGF5ZXIgbXVzdCBsZWF2ZSBzcGFjZSBmb3IgZXllczogeD03NS0xMjUsIHk9MzAtNTUgLS0+CiAgICA8cmVjdCB4PSIyNSIgeT0iMTUiIHdpZHRoPSIxNTAiIGhlaWdodD0iNTAiIHJ4PSIxMCIgcnk9IjEwIiBmaWxsPSIjRkRGQkY3Ii8+CgogICAgPCEtLSBGcnVpdCBEZWNvcmF0aW9ucyAtLT4KICAgIDxnIGlkPSJmcnVpdHMiPgogICAgICA8IS0tIEdyZWVuIEdyYXBlcyAoIzhEQ0I5MikgLSBwbGFjZWQgb3V0c2lkZSB0aGUgZXllIHNwYWNlIC0tPgogICAgICA8Y2lyY2xlIGN4PSI2MCIgY3k9IjMwIiByPSI2IiBmaWxsPSIjOERDQjkyIi8+CiAgICAgIDxjaXJjbGUgY3g9IjUwIiBjeT0iNDUiIHI9IjciIGZpbGw9IiM4RENCOTIiLz4KICAgICAgPGNpcmNsZSBjeD0iNzAiIGN5PSI1OCIgcj0iNiIgZmlsbD0iIzhEQ0I5MiIvPgogICAgICA8Y2lyY2xlIGN4PSIxNDAiIGN5PSIzMCIgcj0iNiIgZmlsbD0iIzhEQ0I5MiIvPgogICAgICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSI0NSIgcj0iNyIgZmlsbD0iIzhEQ0I5MiIvPgogICAgICA8Y2lyY2xlIGN4PSIxMzAiIGN5PSI1OCIgcj0iNiIgZmlsbD0iIzhEQ0I5MiIvPgogICAgICA8Y2lyY2xlIGN4PSIxMDAiIGN5PSIyMCIgcj0iNiIgZmlsbD0iIzhEQ0I5MiIvPgoKICAgICAgPCEtLSBPcmFuZ2UgS3VtcXVhdHMgKCNGRkE3NUEpIC0gZWxsaXBzZXMgZm9yIHNsaWdodCBvdm9pZCBzaGFwZSwgcGxhY2VkIG91dHNpZGUgdGhlIGV5ZSBzcGFjZSAtLT4KICAgICAgPGVsbGlwc2UgY3g9IjYwIiBjeT0iNjAiIHJ4PSI4IiByeT0iNSIgZmlsbD0iI0ZGQTc1QSIvPgogICAgICA8ZWxsaXBzZSBjeD0iMTQwIiBjeT0iNjAiIHJ4PSI4IiByeT0iNSIgZmlsbD0iI0ZGQTc1QSIvPgogICAgICA8ZWxsaXBzZSBjeD0iODAiIGN5PSIyNSIgcng9IjciIHJ5PSI0IiBmaWxsPSIjRkZBNzVBIi8+CiAgICAgIDxlbGxpcHNlIGN4PSIxMjAiIGN5PSIyNSIgcng9IjciIHJ5PSI0IiBmaWxsPSIjRkZBNzVBIi8+CiAgICAgIDxlbGxpcHNlIGN4PSIxMDAiIGN5PSI2NSIgcng9IjgiIHJ5PSI1IiBmaWxsPSIjRkZBNzVBIi8+CiAgICA8L2c+CgogICAgPCEtLSBHZW9tZXRyaWMgRG90IFRleHR1cmUgb24gVG9wIENyZWFtIChhdm9pZGluZyBleWUgc3BhY2U6IHg9NzUtMTI1LCB5PTMwLTU1KSAtLT4KICAgIDxnIGlkPSJ0ZXh0dXJlLWRvdHMiPgogICAgICA8IS0tIFRvcCByb3cgb2YgZG90cyAtLT4KICAgICAgPGNpcmNsZSBjeD0iNDAiIGN5PSIyMCIgcj0iMS41IiBmaWxsPSIjRDhEOEQ4Ii8+CiAgICAgIDxjaXJjbGUgY3g9IjUwIiBjeT0iMjAiIHI9IjEuNSIgZmlsbD0iI0Q4RDhEOCIvPgogICAgICA8Y2lyY2xlIGN4PSI2MCIgY3k9IjIwIiByPSIxLjUiIGZpbGw9IiNEOEQ4RDgiLz4KICAgICAgPGNpcmNsZSBjeD0iNzAiIGN5PSIyMCIgcj0iMS41IiBmaWxsPSIjRDhEOEQ4Ii8+CiAgICAgIDxjaXJjbGUgY3g9IjEzMCIgY3k9IjIwIiByPSIxLjUiIGZpbGw9IiNEOEQ4RDgiLz4KICAgICAgPGNpcmNsZSBjeD0iMTQwIiBjeT0iMjAiIHI9IjEuNSIgZmlsbD0iI0Q4RDhEOCIvPgogICAgICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSIyMCIgcj0iMS41IiBmaWxsPSIjRDhEOEQ4Ii8+CiAgICAgIDxjaXJjbGUgY3g9IjE2MCIgY3k9IjIwIiByPSIxLjUiIGZpbGw9IiNEOEQ4RDgiLz4KICAgICAgPCEtLSBCb3R0b20gcm93IG9mIGRvdHMgLS0+CiAgICAgIDxjaXJjbGUgY3g9IjQwIiBjeT0iNjAiIHI9IjEuNSIgZmlsbD0iI0Q4RDhEOCIvPgogICAgICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjYwIiByPSIxLjUiIGZpbGw9IiNEOEQ4RDgiLz4KICAgICAgPGNpcmNsZSBjeD0iNjAiIGN5PSI2MCIgcj0iMS41IiBmaWxsPSIjRDhEOEQ4Ii8+CiAgICAgIDxjaXJjbGUgY3g9IjcwIiBjeT0iNjAiIHI9IjEuNSIgZmlsbD0iI0Q4RDhEOCIvPgogICAgICA8Y2lyY2xlIGN4PSIxMzAiIGN5PSI2MCIgcj0iMS41IiBmaWxsPSIjRDhEOEQ4Ii8+CiAgICAgIDxjaXJjbGUgY3g9IjE0MCIgY3k9IjYwIiByPSIxLjUiIGZpbGw9IiNEOEQ4RDgiLz4KICAgICAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iNjAiIHI9IjEuNSIgZmlsbD0iI0Q4RDhEOCIvPgogICAgICA8Y2lyY2xlIGN4PSIxNjAiIGN5PSI2MCIgcj0iMS41IiBmaWxsPSIjRDhEOEQ4Ii8+CiAgICAgIDwhLS0gTGVmdCBjb2x1bW4gb2YgZG90cyAob3V0c2lkZSBleWUgeS1yYW5nZSAzMC01NSkgLS0+CiAgICAgIDxjaXJjbGUgY3g9IjMwIiBjeT0iMjUiIHI9IjEuNSIgZmlsbD0iI0Q4RDhEOCIvPgogICAgICA8Y2lyY2xlIGN4PSIzMCIgY3k9IjU4IiByPSIxLjUiIGZpbGw9IiNEOEQ4RDgiLz4KICAgICAgPCEtLSBSaWdodCBjb2x1bW4gb2YgZG90cyAob3V0c2lkZSBleWUgeS1yYW5nZSAzMC01NSkgLS0+CiAgICAgIDxjaXJjbGUgY3g9IjE3MCIgY3k9IjI1IiByPSIxLjUiIGZpbGw9IiNEOEQ4RDgiLz4KICAgICAgPGNpcmNsZSBjeD0iMTcwIiBjeT0iNTgiIHI9IjEuNSIgZmlsbD0iI0Q4RDhEOCIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 30)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 60)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">水果蛋糕</div>
+    <div class="shape">形状: rect | 颜色: #F5E8C7</div>
+  </div>
+
+  <div class="card">
+    <div>
+      <img class="orig" src="../test image/20.jpg" alt="20.jpg" title="原图" />
+      
+        <div class="art" style="position:relative;display:inline-block;width:48%;aspect-ratio:1;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPCEtLSDog4zmma/oibIgLSDph4fnlKjpq5jppbHlkozluqbnmoTmqZnnuqLoibIgKCNGRjQ1MDApIC0tPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkY0NTAwIi8+CgogIDwhLS0g546755KD5p2v5Li75L2TIC0g5p6B566A5Yeg5L2V5bmz6Z2i6K6+6K6h77yM55Wl5bim6ZSl5b2iIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iNjAsMzAgMTQwLDMwIDEzNSwxNzAgNjUsMTcwIiBmaWxsPSIjRDhENERCIi8+CgogIDwhLS0g5bem5L6n6Zi05b2x5Z2XIC0g5aKe5Yqg5rex5bqm5oSf77yM5L2/55So5LqS6KGl6ImyICM5QTk3OUUgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSI2MiwzNSA2NCwxNjAgNjgsMTYwIDY2LDM1IiBmaWxsPSIjOUE5NzlFIi8+CgogIDwhLS0g5Y+z5L6n6auY5YWJ5Z2XIC0g5qih5ouf5YWJ54Wn77yM5L2/55So5LqS6KGl6ImyICNFMEU4RjAgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIxMzgsMzUgMTM2LDE2MCAxMzIsMTYwIDEzNCwzNSIgZmlsbD0iI0UwRThGMCIvPgoKICA8IS0tIOeOu+eSg+adr+e6ueeQhiAo6IKL5p2hKSAtIOS7heWcqOeOu+eSg+adr+S4i+WNiumDqOWIhue7mOWItu+8jOmBv+W8gOecvOedm+WMuuWfnyAoeT0zMC01NSkgLS0+CiAgPGcgZmlsbD0iIzlBOTc5RSI+CiAgICA8cmVjdCB4PSI2OCIgeT0iNTUiIHdpZHRoPSI0IiBoZWlnaHQ9IjExNSIvPgogICAgPHJlY3QgeD0iNzYiIHk9IjU1IiB3aWR0aD0iNCIgaGVpZ2h0PSIxMTUiLz4KICAgIDxyZWN0IHg9Ijg0IiB5PSI1NSIgd2lkdGg9IjQiIGhlaWdodD0iMTE1Ii8+CiAgICA8cmVjdCB4PSI5MiIgeT0iNTUiIHdpZHRoPSI0IiBoZWlnaHQ9IjExNSIvPgogICAgPHJlY3QgeD0iMTAwIiB5PSI1NSIgd2lkdGg9IjQiIGhlaWdodD0iMTE1Ii8+CiAgICA8cmVjdCB4PSIxMDgiIHk9IjU1IiB3aWR0aD0iNCIgaGVpZ2h0PSIxMTUiLz4KICAgIDxyZWN0IHg9IjExNiIgeT0iNTUiIHdpZHRoPSI0IiBoZWlnaHQ9IjExNSIvPgogICAgPHJlY3QgeD0iMTI0IiB5PSI1NSIgd2lkdGg9IjQiIGhlaWdodD0iMTE1Ii8+CiAgICA8cmVjdCB4PSIxMzIiIHk9IjU1IiB3aWR0aD0iNCIgaGVpZ2h0PSIxMTUiLz4KICA8L2c+CgogIDwhLS0g546755KD5p2v5bqV6YOo5Y6a5a6e6YOo5YiGIC0tPgogIDxyZWN0IHg9IjYwIiB5PSIxNzAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI1IiBmaWxsPSIjQzBCREMzIi8+CiAgPCEtLSDnjrvnkoPmna/lupXpg6jnu4boioLnur8gLS0+CiAgPHJlY3QgeD0iNjUiIHk9IjE3NSIgd2lkdGg9IjcwIiBoZWlnaHQ9IjIiIGZpbGw9IiM5QTk3OUUiLz4KCiAgPCEtLSDnjrvnkoPmna/lj6PlpJbmsr8gLSDkvb/nlKjnlaXmt7HnmoTkupLooaXoibIgI0MwQkRDMyAtLT4KICA8ZWxsaXBzZSBjeD0iMTAwIiBjeT0iMzAiIHJ4PSI0MiIgcnk9IjciIGZpbGw9IiNDMEJEQzMiLz4KICA8IS0tIOeOu+eSg+adr+WPo+WGheayvyAvIOmhtumDqOW5s+mdoiAtIOS9v+eUqOabtOS6rueahOS6kuihpeiJsiAjRTBFOEYw77yM5qih5ouf5YaF6YOo5oiW5ray6Z2iIC0tPgogIDxlbGxpcHNlIGN4PSIxMDAiIGN5PSIyOCIgcng9IjM4IiByeT0iNSIgZmlsbD0iI0UwRThGMCIvPgoKICA8IS0tIOWHoOS9leeCueeKtue6ueeQhuijhemlsCAtIOaooeaLn+WPjeWwhOaIluihqOmdoue7huiKgu+8jOS9jeS6juW3puS+p++8jOS9v+eUqCAjRTBFOEYwIC0tPgogIDxnIGZpbGw9IiNFMEU4RjAiPgogICAgPGNpcmNsZSBjeD0iNzAiIGN5PSI4MCIgcj0iMiIvPgogICAgPGNpcmNsZSBjeD0iNzUiIGN5PSI5NSIgcj0iMiIvPgogICAgPGNpcmNsZSBjeD0iNzIiIGN5PSIxMTAiIHI9IjIiLz4KICAgIDxjaXJjbGUgY3g9Ijc4IiBjeT0iMTI1IiByPSIyIi8+CiAgICA8Y2lyY2xlIGN4PSI3MyIgY3k9IjE0MCIgcj0iMiIvPgogICAgPGNpcmNsZSBjeD0iNzAiIGN5PSI1MCIgcj0iMiIvPgogICAgPGNpcmNsZSBjeD0iODAiIGN5PSI2NSIgcj0iMiIvPgogIDwvZz4KPC9zdmc+" style="width:100%;height:100%;object-fit:contain;" />
+          <svg viewBox="-10 -10 120 120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+            <g transform="translate(50, 30)">
+              <circle cx="-13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="13" cy="0" r="14" fill="#f5f0e4"/>
+              <circle cx="-13" cy="0" r="6" fill="black"/>
+              <circle cx="13" cy="0" r="6" fill="black"/>
+            </g>
+            <g transform="translate(50, 60)">
+              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+    </div>
+    <div class="name">玻璃杯</div>
+    <div class="shape">形状: glass | 颜色: #D8D4DB</div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@700&family=Righteous&family=Syne:wght@800&family=DM+Mono&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-ios: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-syne: "Syne", sans-serif;
+  --font-mono: "DM Mono", monospace;
+  --font-bauhaus: "Righteous", cursive;
+  --font-rounded: "Quicksand", sans-serif;
+  --font-cartoon: "Fredoka One", cursive;
+}
+
+@layer base {
+  body {
+    @apply antialiased overflow-hidden;
+  }
+}
+
+.blob-wobble {
+  animation: wobble 4s ease-in-out infinite;
+}
+
+@keyframes wobble {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.05) rotate(2deg); }
+  50% { transform: scale(0.95) rotate(-2deg); }
+  75% { transform: scale(1.02) rotate(1deg); }
+}
+
+.eye-spin {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { rotate: 360deg; }
+}
+
+.shutter-animation {
+  animation: shutter 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes shutter {
+  0% { clip-path: circle(100% at 50% 50%); }
+  40% { clip-path: circle(0% at 50% 50%); }
+  60% { clip-path: circle(0% at 50% 50%); }
+  100% { clip-path: circle(100% at 50% 50%); }
+}

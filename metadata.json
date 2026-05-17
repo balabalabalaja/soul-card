@@ -1,0 +1,5 @@
+{
+  "name": "Soul Card: Object Persona",
+  "description": "Upload a photo of an everyday object to reveal its Pantone-style soul card and personality.",
+  "requestFramePermissions": ["camera"]
+}
