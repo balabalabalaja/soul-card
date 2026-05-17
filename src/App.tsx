@@ -388,28 +388,28 @@ export default function App() {
               <div className="absolute top-8 left-6 right-6 flex justify-between items-center z-50">
                 <button
                   onPointerDown={(e) => { e.preventDefault(); setView('collection'); }}
-                  className={`p-3 rounded-full transition-colors ${card ? 'bg-white/20 text-white' : 'bg-gray-100/50 text-gray-600 backdrop-blur-sm'}`}
+                  className="p-3 rounded-full bg-white/60 backdrop-blur-sm text-gray-700 transition-colors active:bg-white/80"
                 >
                   <Bookmark size={24} />
                 </button>
                 <div className="flex gap-3">
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className={`p-3 rounded-full transition-colors ${card ? 'bg-white/20 text-white' : 'bg-gray-100/50 text-gray-600 backdrop-blur-sm'}`}
+                    className="p-3 rounded-full bg-white/60 backdrop-blur-sm text-gray-700 transition-colors active:bg-white/80"
                     title="上传照片"
                   >
                     <ImageIcon size={24} />
                   </button>
                   <button
                     onPointerDown={(e) => { e.preventDefault(); saveCard(); }}
-                    className={`p-3 rounded-full transition-colors ${card ? 'bg-white/20 text-white' : 'bg-gray-100/50 text-gray-600 backdrop-blur-sm'}`}
+                    className="p-3 rounded-full bg-white/60 backdrop-blur-sm text-gray-700 transition-colors active:bg-white/80"
                     title="保存卡片"
                   >
                     <Plus size={24} />
                   </button>
                   <button
                     onPointerDown={(e) => { e.preventDefault(); setShowCamera(true); }}
-                    className={`p-3 rounded-full transition-colors ${card ? 'bg-white/20 text-white' : 'bg-gray-100/50 text-gray-600 backdrop-blur-sm'}`}
+                    className="p-3 rounded-full bg-white/60 backdrop-blur-sm text-gray-700 transition-colors active:bg-white/80"
                     title="开启相机"
                   >
                     <CameraIcon size={24} />
@@ -512,7 +512,7 @@ export default function App() {
               >
                 <div className="space-y-3">
                   <div className="flex justify-center">
-                    <div className="px-4 py-1.5 rounded-full bg-black text-white font-ios text-[10px] font-bold tracking-widest uppercase">
+                    <div className="px-4 py-1.5 rounded-full border border-black text-black font-ios text-[10px] font-bold tracking-widest uppercase">
                       {selectedPersonality} SOUL
                     </div>
                   </div>
@@ -542,7 +542,7 @@ export default function App() {
                   <div />
                   <button
                     onPointerDown={(e) => { e.preventDefault(); nextWhisper(); }}
-                    className="bg-black text-white px-6 py-2 rounded-full font-mono text-[8px] uppercase tracking-widest active:scale-95 transition-all"
+                    className="border border-black text-black px-8 py-2.5 rounded-full font-syne font-bold text-[10px] tracking-[0.2em] active:scale-95 transition-all uppercase"
                   >
                     TAP TO WHISPER
                   </button>
