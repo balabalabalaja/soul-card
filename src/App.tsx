@@ -417,7 +417,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className={`flex-1 flex flex-col items-center justify-center relative px-6 ${card || loading ? 'pb-[27vh]' : ''}`}>
+              <div className={`flex-1 flex flex-col items-center relative px-6 ${card || loading ? 'justify-start pt-28 pb-[27vh]' : 'justify-center'}`}>
                 {!card && !loading && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden">
                     <div className="absolute inset-[-10%] pointer-events-none scale-110">
@@ -463,7 +463,7 @@ export default function App() {
                 )}
 
                 {(card || loading) && (
-                  <div className="relative flex flex-col items-center mt-20">
+                  <div className="flex flex-col items-center gap-4 w-full">
                     <AnimatePresence mode="wait">
                       {card && !loading && (
                         <motion.div
@@ -471,9 +471,9 @@ export default function App() {
                           initial={{ opacity: 0, scale: 0.8, y: 20 }}
                           animate={{ opacity: 1, scale: 1, y: 0 }}
                           exit={{ opacity: 0, scale: 0.8, y: -20 }}
-                          className="absolute -top-32 z-30"
+                          className="z-30 w-full"
                         >
-                          <div className="bg-white/50 backdrop-blur-xl px-6 py-4 rounded-[2rem] shadow-xl border border-white/20 max-w-[85vw]">
+                          <div className="bg-white/50 backdrop-blur-xl px-6 py-4 rounded-[2rem] shadow-xl border border-white/20 mx-auto max-w-[85vw]">
                             <p className="font-ios text-black text-lg font-medium tracking-tight break-words text-center">
                               {card.whispers[whisperIndex]}
                             </p>
