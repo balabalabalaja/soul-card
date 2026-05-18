@@ -55,27 +55,24 @@ export const Blob: React.FC<BlobProps> = ({
   // If we have a generated image, show it with SVG eyes overlay
   if (generatedImage) {
     return (
-      <div className={`relative ${size} flex items-center justify-center transition-all duration-700 ${isLoading ? 'blob-wobble' : ''} ${className}`}>
-        <div className="relative w-full h-full drop-shadow-xl">
-          <img src={generatedImage} className="w-full h-full object-contain" alt="" />
-          {/* Eyes + mouth as SVG overlay */}
-          <svg
-            viewBox="-10 -10 120 120"
-            className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
-          >
-            <g transform={`translate(${eyeCenter.x}, ${eyeCenter.y})`}>
-              <circle cx="-13" cy="0" r="14" fill="#f5f0e4" />
-              <circle cx="13" cy="0" r="14" fill="#f5f0e4" />
-              <g transform={`translate(${eyePos.x * 7}, ${eyePos.y * 7})`}>
-                <circle cx="-13" cy="0" r="6" fill="black" className={isLoading ? 'eye-spin' : ''} />
-                <circle cx="13" cy="0" r="6" fill="black" className={isLoading ? 'eye-spin' : ''} />
-              </g>
+      <div className={`relative w-full aspect-square overflow-hidden rounded-2xl drop-shadow-xl transition-all duration-700 ${isLoading ? 'blob-wobble' : ''} ${className}`}>
+        <img src={generatedImage} className="w-full h-full object-cover" alt="" />
+        <svg
+          viewBox="-10 -10 120 120"
+          className="absolute inset-0 w-full h-full pointer-events-none"
+        >
+          <g transform={`translate(${eyeCenter.x}, ${eyeCenter.y})`}>
+            <circle cx="-10" cy="0" r="9" fill="#f5f0e4" />
+            <circle cx="10" cy="0" r="9" fill="#f5f0e4" />
+            <g transform={`translate(${eyePos.x * 5}, ${eyePos.y * 5})`}>
+              <circle cx="-10" cy="0" r="4" fill="black" className={isLoading ? 'eye-spin' : ''} />
+              <circle cx="10" cy="0" r="4" fill="black" className={isLoading ? 'eye-spin' : ''} />
             </g>
-            <g transform={`translate(${mouthCenter.x}, ${mouthCenter.y})`}>
-              <path d="M-5,1 Q0,5 5,1" fill="none" stroke="rgba(0,0,0,0.5)" strokeWidth="2" strokeLinecap="round" />
-            </g>
-          </svg>
-        </div>
+          </g>
+          <g transform={`translate(${mouthCenter.x}, ${mouthCenter.y})`}>
+            <path d="M-4,1 Q0,4 4,1" fill="none" stroke="rgba(0,0,0,0.5)" strokeWidth="1.5" strokeLinecap="round" />
+          </g>
+        </svg>
       </div>
     );
   }

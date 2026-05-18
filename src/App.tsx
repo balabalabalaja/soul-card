@@ -500,7 +500,7 @@ export default function App() {
                     </AnimatePresence>
                     <div
                       onPointerDown={(e) => { e.preventDefault(); nextWhisper(); }}
-                      className="cursor-pointer z-20"
+                      className="cursor-pointer z-20 w-full"
                     >
                       <Blob
                         svgPath={card?.svg_path || ""}
