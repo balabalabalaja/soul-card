@@ -429,7 +429,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className={`flex-1 flex flex-col items-center relative px-6 ${card || loading ? 'justify-start pt-28 pb-[33vh]' : 'justify-center'}`}>
+              <div className={`flex-1 flex flex-col items-center relative px-6 ${card || loading ? 'justify-start pt-28 pb-[30vh]' : 'justify-center'}`}>
                 {!card && !loading && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden">
                     <div className="absolute inset-[-10%] pointer-events-none scale-110">
@@ -500,7 +500,7 @@ export default function App() {
                     </AnimatePresence>
                     <div
                       onPointerDown={(e) => { e.preventDefault(); nextWhisper(); }}
-                      className="cursor-pointer z-20 w-full"
+                      className="cursor-pointer z-20 w-[82%]"
                     >
                       <Blob
                         svgPath={card?.svg_path || ""}
